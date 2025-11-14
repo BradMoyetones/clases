@@ -1,0 +1,400 @@
+:root {
+    --primary: #7b2cbf;
+    --secondary: #9d4edd;
+    --accent: #9d4edd4b;
+    --muted: #0000007e;
+    --foreground: #fff;
+    --font-inter: "Inter", sans-serif;
+    --font-onest: "Onest Variable";
+}
+
+@font-face {
+    font-family: 'Onest Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url(https://cdn.jsdelivr.net/fontsource/fonts/onest:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+body {
+    font-family: var(--font-onest);
+    overflow-x: hidden;
+}
+
+main {
+    max-width: 1080px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: rgb(245, 245, 245);
+}
+
+.portafolio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #b8b8b8;
+    background-color: #ffffff38;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    backdrop-filter: blur(20px);
+}
+
+.portafolio-header button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: var(--accent);
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 70;
+}
+
+.portafolio-header button svg {
+    width: 15px;
+    height: 15px;
+}
+
+.portafolio-nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.portafolio-nav a {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: var(--secondary);
+    text-decoration: none;
+    color: var(--foreground);
+    border-radius: 6px;
+    transition: all 0.4s;
+}
+
+.portafolio-nav a:hover {
+    background-color: var(--primary);
+    transform: scale(1.1);
+}
+
+
+/* Estilos del menú hamburguesa */
+.sidebar-back {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 40;
+    background-color: #00000048;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 300px;
+    z-index: 50;
+    background-color: var(--foreground);
+    transform: translateX(300px);
+    transition: all 0.5s;
+}
+
+.toggle-sidebar{
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: var(--accent);
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-content {
+    padding: 10px;
+}
+
+.portafolio-logo {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.portafolio-hero {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.portafolio-hero .title {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.portafolio-hero .image {
+    max-width: 400px;
+    max-height: 400px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: calc(1 / 1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    margin: 0 auto;
+}
+
+.portafolio-hero .image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+}
+
+.portafolio-about {
+    background-color: var(--foreground);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.portafolio-about .title {
+    margin: 20px auto;
+}
+
+.portafolio-about .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.portafolio-about .cards .card {
+    display: flex;
+    flex-direction: column;
+}
+
+.portafolio-about .cards .card .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.portafolio-about .cards .card .header div {
+    line-height: 8px;
+}
+
+.portafolio-about .cards .card .header div p {
+    color: var(--primary);
+}
+
+.portafolio-about .cards .card .header span {
+    color: var(--muted);
+}
+
+.portafolio-about .cards .card .images {
+    display: flex;
+    gap: 20px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.portafolio-about .cards .card .images img {
+    max-width: 300px;
+    border-radius: 30px;
+    box-shadow: 1px 1px 20px var(--primary);
+}
+
+.portafolio-projects {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.portafolio-projects .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.portafolio-projects .cards article {
+    background-color: var(--foreground);
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.3s;
+    border: 2px solid #dadada;
+}
+
+.portafolio-projects .cards article:hover {
+    box-shadow: 4px 4px 30px var(--accent);
+    transform: scale(1.03);
+}
+
+.portafolio-projects .cards article h2 {
+    margin-top: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dadada;
+    display: -webkit-box; /* Required for -webkit-line-clamp */
+    -webkit-line-clamp: 1; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.portafolio-projects .cards article p {
+    display: -webkit-box; /* Required for -webkit-line-clamp */
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.portafolio-projects .cards article div {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    aspect-ratio: calc(2 / 1);
+}
+
+.portafolio-projects .cards article div img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.portafolio-contact {
+    background-color: var(--foreground);
+    display: flex;
+    max-height: 700px;
+}
+
+.portafolio-contact .image {
+    display: flex;
+    overflow: hidden;
+    width: 50%;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 6px 6px 50px var(--accent);
+}
+
+.portafolio-contact .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.portafolio-contact .form {
+    width: 50%;
+    padding: 20px;
+}
+
+.portafolio-contact .form .info form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 14px;
+}
+
+.portafolio-contact .form .info form .group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.portafolio-contact .form .info form .group label {
+    font-weight: 600;
+}
+
+.portafolio-contact .form .info form .group input, textarea {
+    border: 2px solid #dadada;
+    padding: 10px 14px;
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.portafolio-contact .form .info form .group input:focus-visible, textarea:focus-visible {
+    outline: 4px solid var(--accent);
+    border: 2px solid var(--primary);
+}
+
+.portafolio-contact .form .info form button {
+    background-color: var(--secondary);
+    color: var(--foreground);
+    border-radius: 10px;
+    padding: 8px 10px;
+    border: none;
+    box-shadow: 4px 4px 5px var(--accent);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.portafolio-contact .form .info form button:hover {
+    background-color: var(--primary);
+}
+
+
+footer {
+    border-top: 1px solid #dadada;
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media screen and (width < 870px) {
+    .portafolio-hero {
+        flex-direction: column;
+    }
+
+    .portafolio-hero .title {
+        width: 100%;
+    }
+
+    .portafolio-about .cards .card .images {
+        flex-direction: column;
+    }
+
+    .portafolio-contact .image {
+        display: none;
+    }
+
+    .portafolio-contact .form {
+        width: 100%;
+    }
+}
+
+@media screen and (width < 860px) {
+    .portafolio-projects .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (width < 550px) {
+    .portafolio-projects .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (width < 600px) {
+    .portafolio-header .portafolio-nav {
+        display: none;
+    }
+
+    .portafolio-header button {
+        display: flex;
+    }
+}

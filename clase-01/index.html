@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Brad</title>
+    <link rel="stylesheet" href="./assets/normalize.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./assets/styles.css">
+    <script src="./assets/scripts.js"></script>
+</head>
+<body>
+    <main>
+        <!-- Cabecera de nuestro portafolio -->
+        <header class="portafolio-header">
+            <h1 class="portafolio-logo">
+                BRAD
+            </h1>
+            <nav class="portafolio-nav">
+                <a href="#">Inicio</a>
+                <a href="#">Acerca de</a>
+                <a href="#">Proyectos</a>
+                <a href="#">Contacto</a>
+            </nav>
+            <button id="open">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 open">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- Aqui esta el menú hamburguesas -->
+        <div id="sidebar-back" class="sidebar-back"></div>
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-content">
+                <button id="close" class="toggle-sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                
+            </div>
+        </div>
+
+        <section class="portafolio-hero">
+            <div class="title">
+                <h1>Construyendo puentes entre el software y el código</h1>
+                <p>
+                    Soy Brad Moyetones, un Ingeniero de Sistemas | Desarrollador Fullstack especializado en React y Node.js en el Parque Jaime Duque, donde desarrollo herramientas internas y sistemas personalizados que resuelven problemas reales.
+                </p>
+            </div>
+            
+            <div class="image">
+                <img src="./assets/img/mi-imagen.jpg" alt="Imagen de escritorio de trabajo">
+            </div>
+        </section>
+
+        <section class="portafolio-about">
+            
+            <h1 class="title">Acerca de Mí</h1>
+
+            <div class="cards">
+                <h1>Experiencia laboral</h1>
+                
+                <article class="card">
+                    <div class="header">
+                        <div>
+                            <h2>Parque Jaime Duque</h2>
+                            <p>Desarrollador de Sistemas</p>
+                        </div>
+                        
+                        <span>2023 - Presente</span>
+                    </div>
+                    <p>
+                        En el Parque Jaime Duque he tenido la oportunidad de diseñar soluciones que impactan directamente las operaciones diarias del personal. Algunas incluyen un sistema de gestión de comidas con reportes y analítica, la plataforma Ecotrueque que promueve el reciclaje mediante beneficios, una biblioteca digital que reemplazó procesos manuales en Excel, y una herramienta de programación que optimizó la organización de turnos del personal.
+                    </p>
+                    <div class="images">
+                        <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHBvcnRmb2xpb3xlbnwwfHwwfHx8MA%3D%3D" alt="Proyecto">
+                        <img src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBvcnRmb2xpb3xlbnwwfHwwfHx8MA%3D%3D" alt="Proyecto">
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="cards">
+                <h1>Educación</h1>
+                
+                <article>
+                    <div>
+                        <h2>Aprendizaje autodidacta</h2>
+                        <p>Amplié mis conocimientos en tecnologías web modernas como React, Node.js y Next.js a través de proyectos personales y autoestudio.</p>
+                    </div>
+                </article>
+
+                <article>
+                    <div>
+                        <h2>Universidad CUN - Corporación Unificada Nacional de Educación Superior (29 feb 2024 - 30 jun 2025)</h2>
+                        <p>Estudios en Ingeniería de Sistemas.</p>
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="cards">
+                <h1>Habilidades</h1>
+                
+                <article>
+                    <div>
+                        <h2>Tecnologías</h2>
+                        <p>Node.js, Express, React, Next.js, Tailwind, PostgreSQL, MySQL, Prisma, SQLite, PHP (Laravel y Slim), integración de sistemas y desarrollo de APIs.</p>
+                    </div>
+                </article>
+
+                <article>
+                    <div>
+                        <h2>Habilidades blandas</h2>
+                        <p>Soy una persona colaborativa, responsable y apasionada por el desarrollo. Trabajo con vocación, disfruto resolver problemas y me adapto rápidamente a nuevos desafíos.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="portafolio-projects">
+            <div class="title">
+                <h1>Proyectos</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, excepturi! Quis esse dolorum explicabo tenetur, reprehenderit omnis repellendus vel ea! Beatae ratione delectus officia cum aliquid suscipit ea nam culpa.</p>
+            </div>
+
+            <div class="cards">
+                <article>
+                    <h2>Noesis</h2>
+                    <p>Una plataforma de escritura construida con Next.js, Plate.js y Prisma, que empodera a los creadores a expresar pensamientos profundos con ricas herramientas de edición y una interfaz de usuario moderna.</p>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJveWVjdHN8ZW58MHx8MHx8fDA%3D" alt="Projects">
+                    </div>
+                </article>
+                <article>
+                    <h2>Programación</h2>
+                    <p>Aplicación interna para asignar y visualizar los turnos de vigilancia en el Parque Jaime Duque, mejorando la claridad y reduciendo la fricción administrativa.</p>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHByb3llY3RzfGVufDB8fDB8fHww" alt="Projects">
+                    </div>
+                </article>
+                <article>
+                    <h2>Bibliotecas</h2>
+                    <p>Un sistema digital para gestionar el inventario de libros, la disponibilidad y el seguimiento de préstamos en la biblioteca interna del Parque Jaime Duque.</p>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHByb3llY3RzfGVufDB8fDB8fHww" alt="Projects">
+                    </div>
+                </article>
+                <article>
+                    <h2>Ecotrueque</h2>
+                    <p>Una aplicación interna desarrollada para digitalizar el programa de reciclaje Ecotrueque para los colaboradores del Parque Jaime Duque, automatizando el seguimiento de materiales y la redención de beneficios.</p>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1621910226772-771f03fb0d9a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb3llY3RzfGVufDB8fDB8fHww" alt="Projects">
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="portafolio-contact">
+            <div class="image">
+                <img src="https://images.unsplash.com/photo-1615840287214-7ff58936c4cf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29udGFjdCUyMHVzfGVufDB8fDB8fHww" alt="Contact">
+            </div>
+            <div class="form">
+                <div class="title">
+                    <h1>Contactanos</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At amet blanditiis ex ea provident eaque, dolores reiciendis facilis accusantium temporibus optio possimus, ad minima sunt qui voluptates, eligendi dignissimos esse.</p>
+                </div>
+
+                <div class="info">
+                    <form action="#">
+                        <div class="group">
+                            <label for="nombre">Nombre</label>
+                            <input id="nombre" type="text" placeholder="Nombre">
+                        </div>
+
+                        <div class="group">
+                            <label for="apellido">Apellido</label>
+                            <input id="apellido" type="text" placeholder="Apellido">
+                        </div>
+
+                        <div class="group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="Email">
+                        </div>
+
+                        <div class="group">
+                            <label for="nota">Nota</label>
+                            <textarea name="nota" id="nota" placeholder="Nota"></textarea>
+                        </div>
+
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+
+        <footer>
+            <div>
+                <p>Contruido por Brad. &copy; 2025 Todos los derechos reservados.</p>
+            </div>
+        </footer>
+
+    </main>
+</body>
+</html>
