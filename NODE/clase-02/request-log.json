@@ -1,0 +1,18 @@
+{
+  "method": "POST",
+  "url": "/",
+  "headers": {
+    "user-agent": "PostmanRuntime/7.50.0",
+    "accept": "*/*",
+    "postman-token": "2af0f55f-dbbf-4bf3-8b26-dfbde6b754dd",
+    "host": "127.0.0.1:3000",
+    "accept-encoding": "gzip, deflate, br",
+    "connection": "keep-alive",
+    "content-type": "multipart/form-data; boundary=--------------------------430879052882373300115360",
+    "content-length": "276"
+  },
+  "body": {
+    "nombre": "Vrad",
+    "apellido": "hola"
+  }
+}
