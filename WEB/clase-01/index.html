@@ -17,36 +17,63 @@
     <main>
         <!-- Cabecera de nuestro portafolio -->
         <header class="portafolio-header">
-            <h1 class="portafolio-logo">
-                BRAD
-            </h1>
             <nav class="portafolio-nav">
-                <a href="#">Inicio</a>
-                <a href="#">Acerca de</a>
-                <a href="#">Proyectos</a>
-                <a href="#">Contacto</a>
+                <a href="#portafolio-hero">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                </a>
+                <a href="#portafolio-about">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                    Acerca de
+                </a>
+                <a href="#portafolio-projects">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-marked-icon lucide-book-marked"><path d="M10 2v8l3-3 3 3V2"/><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+                    Proyectos
+                </a>
+                <a href="#portafolio-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
+                    Contacto
+                </a>
             </nav>
-            <button id="open">
+            <!-- <button id="open" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 open">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
-            </button>
+            </button> -->
         </header>
 
         <!-- Aqui esta el menú hamburguesas -->
-        <div id="sidebar-back" class="sidebar-back"></div>
+        <div onclick="toggleSidebar()" id="sidebar-back" class="sidebar-back"></div>
         <div id="sidebar" class="sidebar">
             <div class="sidebar-content">
-                <button id="close" class="toggle-sidebar">
+                <button onclick="toggleSidebar()" id="close" class="toggle-sidebar">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </button>
+
+                <div class="nav">
+                    <a onclick="toggleSidebar()" href="#portafolio-hero">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        Inicio
+                    </a>
+                    <a onclick="toggleSidebar()" href="#portafolio-about">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                        Acerca de
+                    </a>
+                    <a onclick="toggleSidebar()" href="#portafolio-projects">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-marked-icon lucide-book-marked"><path d="M10 2v8l3-3 3 3V2"/><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+                        Proyectos
+                    </a>
+                    <a onclick="toggleSidebar()" href="#portafolio-contact">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
+                        Contacto
+                    </a>
+                </div>
                 
             </div>
         </div>
 
-        <section class="portafolio-hero">
+        <section class="portafolio-hero" id="portafolio-hero">
             <div class="title">
                 <h1>Construyendo puentes entre el software y el código</h1>
                 <p>
@@ -59,7 +86,7 @@
             </div>
         </section>
 
-        <section class="portafolio-about">
+        <section class="portafolio-about" id="portafolio-about">
             
             <h1 class="title">Acerca de Mí</h1>
 
@@ -124,7 +151,7 @@
             </div>
         </section>
 
-        <section class="portafolio-projects">
+        <section class="portafolio-projects" id="portafolio-projects">
             <div class="title">
                 <h1>Proyectos</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, excepturi! Quis esse dolorum explicabo tenetur, reprehenderit omnis repellendus vel ea! Beatae ratione delectus officia cum aliquid suscipit ea nam culpa.</p>
@@ -162,7 +189,7 @@
             </div>
         </section>
 
-        <section class="portafolio-contact">
+        <section class="portafolio-contact" id="portafolio-contact">
             <div class="image">
                 <img src="https://images.unsplash.com/photo-1615840287214-7ff58936c4cf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29udGFjdCUyMHVzfGVufDB8fDB8fHww" alt="Contact">
             </div>

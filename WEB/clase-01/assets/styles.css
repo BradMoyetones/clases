@@ -17,6 +17,10 @@
     unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-onest);
     overflow-x: hidden;
@@ -37,12 +41,17 @@ main {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    border-bottom: 1px solid #b8b8b8;
-    background-color: #ffffff38;
+    border: 1px solid #b8b8b88f;
+    background-color: #ffffff5d;
     position: sticky;
-    top: 0;
+    top: 10px;
     z-index: 1;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(50px);
+
+    width: fit-content;
+    margin: 0 auto;
+    padding: 6px 10px;
+    border-radius: 100px;
 }
 
 .portafolio-header button {
@@ -69,19 +78,26 @@ main {
 }
 
 .portafolio-nav a {
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    background-color: var(--secondary);
+    padding: 5px;
+    background-color: #ffffffa8;
     text-decoration: none;
-    color: var(--foreground);
-    border-radius: 6px;
+    color: var(--primary);
+    border-radius: 200px;
     transition: all 0.4s;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.portafolio-nav a svg {
+    width: 16px;
+    height: 16px;
 }
 
 .portafolio-nav a:hover {
-    background-color: var(--primary);
+    background-color: var(--accent);
     transform: scale(1.1);
 }
 
@@ -117,12 +133,35 @@ main {
     border: none;
     background-color: var(--accent);
     border-radius: 10px;
-    align-items: center;
-    justify-content: center;
 }
 
 .sidebar-content {
     padding: 10px;
+}
+
+.sidebar-content .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+}
+
+.sidebar-content .nav a {
+    background-color: #dadada83;
+    color: #000;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+}
+
+.sidebar-content .nav a svg {
+    color: var(--primary);
+    width: 18px;
+    height: 18px;
 }
 
 .portafolio-logo {
@@ -135,6 +174,7 @@ main {
     display: flex;
     align-items: center;
     gap: 20px;
+    scroll-margin-top: 64px;
 }
 
 .portafolio-hero .title {
@@ -169,6 +209,7 @@ main {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    scroll-margin-top: 64px;
 }
 
 .portafolio-about .title {
@@ -222,6 +263,7 @@ main {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    scroll-margin-top: 64px;
 }
 
 .portafolio-projects .cards {
@@ -282,6 +324,7 @@ main {
     background-color: var(--foreground);
     display: flex;
     max-height: 700px;
+    scroll-margin-top: 64px;
 }
 
 .portafolio-contact .image {
@@ -390,9 +433,9 @@ footer {
 }
 
 @media screen and (width < 600px) {
-    .portafolio-header .portafolio-nav {
+    /* .portafolio-header .portafolio-nav {
         display: none;
-    }
+    } */
 
     .portafolio-header button {
         display: flex;
