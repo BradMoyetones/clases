@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO'S</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/not-a-toast@1.1.5/dist/style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/not-a-toast@1.1.5/dist/not-a-toast.umd.js" defer></script>
+    <script src="./src/scripts.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+<body>
+    <div class="min-h-screen w-full flex flex-col items-center justify-center bg-linear-to-t from-slate-600 to-slate-200 dark:bg-linear-to-t dark:from-foreground/10 dark:to-transparent py-10">
+        <div class="max-w-2xl min-h-[600px] elemento transition-all! w-full bg-muted dark:bg-background rounded-4xl overflow-hidden border-4 border-border">
+
+            <div class="w-full px-4 pt-2 bg-background dark:bg-card border-b border-foreground/20 flex items-center justify-between">
+                <button class="px-4 py-4 font-bold border-b border-foreground cursor-pointer">
+                    Today's Task
+                </button>
+
+                <!-- Botón de cambio de tema -->
+                <button 
+                    data-theme-toggle 
+                    class="p-2 rounded-lg hover:bg-muted transition-all cursor-pointer"
+                    title="Toggle theme"
+                >
+                    <!-- El icono se insertará dinámicamente -->
+                </button>
+            </div>
+
+            <div class="p-8 transition-all!">
+                <!-- Title -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="font-bold text-2xl">Today's Task</h1>
+                        <p class="text-muted-foreground" data-now></p>
+                    </div>
+
+                    <button onclick="toggleModal()" class="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-xl cursor-pointer hover:bg-primary/90 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                        New Task
+                    </button>
+                </div>
+
+                <!-- Toolbar -->
+                <div class="flex items-center gap-6 my-8" id="toolbar">
+                    <button data-tab="all" class="text-primary font-bold cursor-pointer hover:text-primary group transition-all">
+                        All <span data-all-length class="text-sm bg-primary text-primary-foreground rounded-full px-1.5 py-0.5 group-hover:text-primary-foreground group-hover:bg-primary transition-all">35</span>
+                    </button>
+                    
+                    <div class="w-0.5 h-4 rounded-full bg-muted-foreground/30"></div>
+                    
+                    <button data-tab="open" class="text-muted-foreground cursor-pointer hover:text-primary group transition-all">
+                        Open <span data-open-length class="text-sm bg-muted-foreground/20 rounded-full px-1.5 py-0.5 group-hover:text-primary-foreground group-hover:bg-primary transition-all">14</span>
+                    </button>
+                    <button data-tab="closed" class="text-muted-foreground cursor-pointer hover:text-primary group transition-all">
+                        Closed <span data-closed-length class="text-sm bg-muted-foreground/20 rounded-full px-1.5 py-0.5 group-hover:text-primary-foreground group-hover:bg-primary transition-all">19</span>
+                    </button>
+                    <button data-tab="archived" class="text-muted-foreground cursor-pointer hover:text-primary group transition-all">
+                        Archived <span data-archived-length class="text-sm bg-muted-foreground/20 rounded-full px-1.5 py-0.5 group-hover:text-primary-foreground group-hover:bg-primary transition-all">2</span>
+                    </button>
+                </div>
+
+                <!-- Cards -->
+                <div id="cards" class="flex flex-col gap-8 transition-all!">
+                    
+                </div>
+
+
+                <!-- Card -->
+                <template id="card">
+                    <div class="bg-background dark:bg-card p-6 rounded-2xl shadow-2xl/5 rowInAnimation" data-id>
+                        <!-- Card Title -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h1 class="text-xl" data-title></h1>
+                                <p class="text-muted-foreground" data-description></p>
+                            </div>
+
+                            <button class="toggle-complete bg-muted border-4 border-accent rounded-full p-1 text-primary-foreground cursor-pointer transition-all">
+                                <svg class="lucide lucide-check-icon lucide-check opacity-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- Separator -->
+                        <div class="h-px w-full bg-muted-foreground/20 my-3"></div>
+
+                        <!-- Detail -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-muted-foreground" data-detail>
+                                
+                            </span>
+
+                            <div>
+                                <button class="toggle-archive rounded-full p-1 bg-muted hover:bg-accent [&>svg]:size-5 transition-all cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive-icon lucide-archive"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+                                </button>
+
+                                <button class="edit rounded-full p-1 bg-muted hover:bg-accent [&>svg]:size-5 transition-all cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+                                </button>
+
+                                <button class="delete rounded-full p-1 bg-muted hover:bg-destructive hover:text-white [&>svg]:size-5 transition-all cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Empty -->
+                <template id="empty-message">
+                    <div class="rowInAnimation bg-background dark:bg-card p-6 rounded-2xl shadow-2xl/5 text-center" data-empty-message>
+                        Empty
+                    </div>
+                </template>
+
+                <!-- Overlay -->
+                <div id="modalOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center">
+                    <!-- Modal -->
+                    <div id="modalBox" class="bg-background border p-6 rounded-2xl shadow-xl max-w-80 w-full transform scale-90 opacity-0 transition-all duration-300">
+                        <h2 class="text-xl font-semibold mb-3" data-title-modal>Create Task</h2>
+                        <p class="text-muted-foreground mb-4" data-description-modal>Complete input data for todo</p>
+
+                        <div>
+                            <form id="form" class="space-y-4">
+                                <input id="form-input-id" type="hidden" name="id" value="">
+                                <div>
+                                    <label for="title">Title</label>
+                                    <input id="title" type="text" name="title" placeholder="Title" class="block w-full rounded-md bg-background/5 px-3 py-1.5 outline-1 -outline-offset-1 outline-border placeholder:text-muted-foreground focus:outline-2 focus:-outline-offset-2 focus:outline-primary">
+                                </div>
+
+                                <div>
+                                    <label for="description">Description</label>
+                                    <textarea id="description" type="text" name="description" placeholder="Type a description" rows="3" class="block w-full rounded-md bg-background/5 px-3 py-1.5 outline-1 -outline-offset-1 outline-border placeholder:text-muted-foreground focus:outline-2 focus:-outline-offset-2 focus:outline-primary"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input name="isArchived" type="checkbox" class="sr-only peer">
+                                        <div class="relative w-9 h-5 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-accent rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-primary after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary transition-all"></div>
+                                        <span class="select-none ms-3 text-sm font-medium">Archive</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <button
+                                        data-button-modal
+                                        class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 cursor-pointer transition"
+                                        type="submit"
+                                    >
+                                        Create
+                                    </button>
+
+                                    <button
+                                        onclick="toggleModal()"
+                                        class="px-4 py-2 bg-destructive/70 text-white rounded-lg hover:bg-destructive cursor-pointer transition"
+                                        type="button"
+                                    >
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
