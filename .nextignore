@@ -1,0 +1,3 @@
+content/clases/**/package.json
+content/clases/**/package-lock.json
+content/clases/**/node_modules
