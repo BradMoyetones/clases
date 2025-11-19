@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Learn Javascript",
-  url: "https://docs.portaljaimeduque.net",
+  url: process.env.NEXT_PUBLIC_APP_URL,
   ogImage: "https://docs.portaljaimeduque.net/og.jpg",
   description:
-    "Documentación de cada uno de los proyectos desarrollados en el Learn Javascript.",
+    "Aqui podras aprender las bases de la web entre ellos Javascript, HTML, CSS.",
   links: {
     twitter: "https://twitter.com/BradMoyetones",
     instagram: "https://www.instagram.com/its.bradn",
