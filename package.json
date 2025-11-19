@@ -8,6 +8,10 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "workspaces": [
+    "./*",
+    "content/clases/**"
+  ],
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",

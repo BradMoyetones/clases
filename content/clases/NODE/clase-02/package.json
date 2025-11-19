@@ -1,6 +1,7 @@
 {
-  "name": "first-backend",
+  "name": "second-backend",
   "version": "1.0.0",
+  "private": true,
   "description": "Este es el primer proyecto node de las clases",
   "keywords": [
     "node",

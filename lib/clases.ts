@@ -41,16 +41,17 @@ export function readFileFromSlug(slug: string[]): {
     }
 }
 
-export function getClaseMeta(folder: string): ClaseFrontMatter | null {
+export function getClaseMeta(folder: string[]): ClaseFrontMatter | null {
+    
     try {
-        const mdxPath = resolvePath(folder, "README.mdx");
+        const mdxPath = resolvePath(...folder, "README.mdx");
         if (!fs.existsSync(mdxPath)) return null;
 
         const raw = fs.readFileSync(mdxPath, "utf-8");
         const { data } = matter(raw);
 
         // Validar con Zod
-        const parsed = ClaseFrontMatterSchema.safeParse(data);
+        const parsed = ClaseFrontMatterSchema.safeParse({...data, id: folder[folder.length - 1]});
 
         if (!parsed.success) {
             console.warn(`❌ Invalid frontmatter in ${folder}/README.mdx`);
@@ -65,17 +66,24 @@ export function getClaseMeta(folder: string): ClaseFrontMatter | null {
     }
 }
 
-export function getClaseContent(folder: string) {
-    const mdxPath = resolvePath(folder, "README.mdx");
-    if (!fs.existsSync(mdxPath)) return null;
+export function getClaseContent(folder: string[], file: string) {
+    const mdxPath = readFileFromSlug([...folder, file]); 
+    if (!mdxPath) return null;
 
-    const raw = fs.readFileSync(mdxPath, "utf-8");
+    const id = Array.isArray(folder) ? folder[folder.length - 1] : folder;
+    const raw = mdxPath.buffer.toString("utf-8");
     const { data, content } = matter(raw);
 
-    const parsed = ClaseFrontMatterSchema.safeParse(data);
+    const parsed = ClaseFrontMatterSchema.safeParse({...data, id});
     if (!parsed.success) return null;
 
-    return { meta: parsed.data, content };
+    return { 
+        meta: {
+            ...parsed.data,
+            id,
+        }, 
+        content 
+    };
 }
 
 export function getClases() {
@@ -83,7 +91,7 @@ export function getClases() {
 
     return folders
         .map((folder) => {
-            const meta = getClaseMeta(folder);
+            const meta = getClaseMeta([folder]);
 
             return {
                 id: folder,

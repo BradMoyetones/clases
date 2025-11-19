@@ -1,5 +1,5 @@
-type IconProps = React.SVGProps<SVGSVGElement>;
-type Icon = React.FC<IconProps>;
+export type IconProps = React.SVGProps<SVGSVGElement>;
+export type Icon = React.FC<IconProps>;
 
 interface LanguageConfig {
     icon: Icon;
@@ -17,10 +17,7 @@ const HtmlIcon: Icon = (props) => (
 
 const CSS: Icon = (props) => (
     <svg {...props} viewBox="0 0 512 512">
-        <path
-            fill="#264de4"
-            d="M71.357 460.819 30.272 0h451.456l-41.129 460.746L255.724 512z"
-        />
+        <path fill="#264de4" d="M71.357 460.819 30.272 0h451.456l-41.129 460.746L255.724 512z" />
         <path fill="#2965f1" d="m405.388 431.408 35.148-393.73H256v435.146z" />
         <path
             fill="#ebebeb"
@@ -57,11 +54,7 @@ const TypeScript: Icon = (props) => (
 );
 
 const React: Icon = (props) => (
-    <svg
-        {...props}
-        viewBox="0 0 569 512"
-        xmlns="http://www.w3.org/1999/xlink"
-    >
+    <svg {...props} viewBox="0 0 569 512" xmlns="http://www.w3.org/1999/xlink">
         <g fill="none" fillRule="evenodd">
             <g transform="translate(-227, -256)" fill="#58C4DC" fillRule="nonzero">
                 <g transform="translate(227, 256)">
@@ -97,34 +90,71 @@ const TailwindCSS: Icon = (props) => (
     </svg>
 );
 
-
 const languages: Record<string, LanguageConfig> = {
     html: {
         icon: HtmlIcon,
-        className: "bg-orange-600 dark:bg-orange-400",
+        className: 'bg-lang-html-accent text-lang-html-accent-foreground',
     },
     css: {
         icon: CSS,
-        className: "bg-blue-600 dark:bg-blue-400",
+        className: 'bg-lang-css-accent text-lang-css-accent-foreground',
     },
     javascript: {
         icon: JavaScript,
-        className: "bg-yellow-500 dark:bg-yellow-300",
+        className: 'bg-lang-javascript-accent text-lang-javascript-accent-foreground',
     },
     typescript: {
         icon: TypeScript,
-        className: "bg-blue-500 dark:bg-blue-300",
+        className: 'bg-lang-typescript-accent text-lang-typescript-accent-foreground',
     },
     react: {
         icon: React,
-        className: "bg-cyan-500 dark:bg-cyan-300",
+        className: 'bg-lang-react-accent text-lang-react-accent-foreground',
     },
     tailwind: {
         icon: TailwindCSS,
-        className: "bg-cyan-400 dark:bg-cyan-200",
-    }
+        className: 'bg-lang-tailwind-accent text-lang-tailwind-accent-foreground',
+    },
+    // nodejs: {
+    //     icon: NodeJS,
+    //     className: 'bg-lang-nodejs-accent text-lang-nodejs-accent-foreground',
+    // },
+    // python: {
+    //     icon: Python,
+    //     className: 'bg-lang-python-accent text-lang-python-accent-foreground',
+    // },
+    // java: {
+    //     icon: Java,
+    //     className: 'bg-lang-java-accent text-lang-java-accent-foreground',
+    // },
+    // csharp: {
+    //     icon: CSharp,
+    //     className: 'bg-lang-csharp-accent text-lang-csharp-accent-foreground',
+    // },
+    // cpp: {
+    //     icon: CPP,
+    //     className: 'bg-lang-cpp-accent text-lang-cpp-accent-foreground',
+    // },
+    // go: {
+    //     icon: Go,
+    //     className: 'bg-lang-go-accent text-lang-go-accent-foreground',
+    // },
+    // rust: {
+    //     icon: Rust,
+    //     className: 'bg-lang-rust-accent text-lang-rust-accent-foreground',
+    // },
+    // php: {
+    //     icon: PHP,
+    //     className: 'bg-lang-php-accent text-lang-php-accent-foreground',
+    // },
+    // swift: {
+    //     icon: Swift,
+    //     className: 'bg-lang-swift-accent text-lang-swift-accent-foreground',
+    // },
+    // kotlin: {
+    //     icon: Kotlin,
+    //     className: 'bg-lang-kotlin-accent text-lang-kotlin-accent-foreground',
+    // },
 };
 
-export { languages }
-
-
+export { languages };

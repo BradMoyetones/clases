@@ -57,17 +57,52 @@
   --color-selection: var(--selection);
   --color-selection-foreground: var(--selection-foreground);
 
+  /* Add language accent and foreground colors to theme */
+  --color-lang-html-accent: var(--lang-html-accent);
+  --color-lang-html-accent-foreground: var(--lang-html-accent-foreground);
+  --color-lang-css-accent: var(--lang-css-accent);
+  --color-lang-css-accent-foreground: var(--lang-css-accent-foreground);
+  --color-lang-javascript-accent: var(--lang-javascript-accent);
+  --color-lang-javascript-accent-foreground: var(--lang-javascript-accent-foreground);
+  --color-lang-typescript-accent: var(--lang-typescript-accent);
+  --color-lang-typescript-accent-foreground: var(--lang-typescript-accent-foreground);
+  --color-lang-react-accent: var(--lang-react-accent);
+  --color-lang-react-accent-foreground: var(--lang-react-accent-foreground);
+  --color-lang-tailwind-accent: var(--lang-tailwind-accent);
+  --color-lang-tailwind-accent-foreground: var(--lang-tailwind-accent-foreground);
+  --color-lang-nodejs-accent: var(--lang-nodejs-accent);
+  --color-lang-nodejs-accent-foreground: var(--lang-nodejs-accent-foreground);
+  --color-lang-python-accent: var(--lang-python-accent);
+  --color-lang-python-accent-foreground: var(--lang-python-accent-foreground);
+  --color-lang-java-accent: var(--lang-java-accent);
+  --color-lang-java-accent-foreground: var(--lang-java-accent-foreground);
+  --color-lang-csharp-accent: var(--lang-csharp-accent);
+  --color-lang-csharp-accent-foreground: var(--lang-csharp-accent-foreground);
+  --color-lang-cpp-accent: var(--lang-cpp-accent);
+  --color-lang-cpp-accent-foreground: var(--lang-cpp-accent-foreground);
+  --color-lang-go-accent: var(--lang-go-accent);
+  --color-lang-go-accent-foreground: var(--lang-go-accent-foreground);
+  --color-lang-rust-accent: var(--lang-rust-accent);
+  --color-lang-rust-accent-foreground: var(--lang-rust-accent-foreground);
+  --color-lang-php-accent: var(--lang-php-accent);
+  --color-lang-php-accent-foreground: var(--lang-php-accent-foreground);
+  --color-lang-swift-accent: var(--lang-swift-accent);
+  --color-lang-swift-accent-foreground: var(--lang-swift-accent-foreground);
+  --color-lang-kotlin-accent: var(--lang-kotlin-accent);
+  --color-lang-kotlin-accent-foreground: var(--lang-kotlin-accent-foreground);
+
   /* Aceternity UI */
-  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1
-  var(--delay, 0ms);
- 
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+
   @keyframes cell-ripple {
     0% {
       opacity: 0.4;
     }
+
     50% {
       opacity: 0.8;
     }
+
     100% {
       opacity: 0.4;
     }
@@ -115,6 +150,40 @@
   --code-number: oklch(0.56 0 0);
   --selection: oklch(0.145 0 0);
   --selection-foreground: oklch(1 0 0);
+
+  /* Language colors with accent and foreground separation */
+  --lang-html-accent: oklch(0.9869 0.0214 95.2774);
+  --lang-html-accent-foreground: oklch(0.145 0 0);
+  --lang-css-accent: oklch(0.9542 0.0552 262.5181);
+  --lang-css-accent-foreground: oklch(0.145 0 0);
+  --lang-javascript-accent: oklch(0.9765 0.0621 95.8854);
+  --lang-javascript-accent-foreground: oklch(0.145 0 0);
+  --lang-typescript-accent: oklch(0.9542 0.0552 262.5181);
+  --lang-typescript-accent-foreground: oklch(0.145 0 0);
+  --lang-react-accent: oklch(0.9614 0.0598 195.3255);
+  --lang-react-accent-foreground: oklch(0.145 0 0);
+  --lang-tailwind-accent: oklch(0.9712 0.0472 195.7251);
+  --lang-tailwind-accent-foreground: oklch(0.145 0 0);
+  --lang-nodejs-accent: oklch(0.9656 0.0387 135.7546);
+  --lang-nodejs-accent-foreground: oklch(0.145 0 0);
+  --lang-python-accent: oklch(0.9542 0.0552 262.5181);
+  --lang-python-accent-foreground: oklch(0.145 0 0);
+  --lang-java-accent: oklch(0.9765 0.0682 20.2456);
+  --lang-java-accent-foreground: oklch(0.145 0 0);
+  --lang-csharp-accent: oklch(0.9634 0.0505 283.7451);
+  --lang-csharp-accent-foreground: oklch(0.145 0 0);
+  --lang-cpp-accent: oklch(0.9542 0.0552 262.5181);
+  --lang-cpp-accent-foreground: oklch(0.145 0 0);
+  --lang-go-accent: oklch(0.9614 0.0598 195.3255);
+  --lang-go-accent-foreground: oklch(0.145 0 0);
+  --lang-rust-accent: oklch(0.9869 0.0214 95.2774);
+  --lang-rust-accent-foreground: oklch(0.145 0 0);
+  --lang-php-accent: oklch(0.9634 0.0505 283.7451);
+  --lang-php-accent-foreground: oklch(0.145 0 0);
+  --lang-swift-accent: oklch(0.9869 0.0214 95.2774);
+  --lang-swift-accent-foreground: oklch(0.145 0 0);
+  --lang-kotlin-accent: oklch(0.9634 0.0505 283.7451);
+  --lang-kotlin-accent-foreground: oklch(0.145 0 0);
 }
 
 .dark {
@@ -157,18 +226,55 @@
   --code-number: oklch(0.72 0 0);
   --selection: oklch(0.922 0 0);
   --selection-foreground: oklch(0.205 0 0);
+
+  /* Language colors with accent and foreground separation for dark mode */
+  --lang-html-accent: oklch(29.59% 0.07048 48.762);
+  --lang-html-accent-foreground: oklch(0.985 0 0);
+  --lang-css-accent: oklch(28.166% 0.07523 264.402);
+  --lang-css-accent-foreground: oklch(0.985 0 0);
+  --lang-javascript-accent: oklch(34.584% 0.07064 89.368);
+  --lang-javascript-accent-foreground: oklch(0.985 0 0);
+  --lang-typescript-accent: oklch(0.4567 0.1567 264.8945);
+  --lang-typescript-accent-foreground: oklch(0.985 0 0);
+  --lang-react-accent: oklch(0.5234 0.1689 196.5234);
+  --lang-react-accent-foreground: oklch(0.985 0 0);
+  --lang-tailwind-accent: oklch(0.5123 0.1567 196.2154);
+  --lang-tailwind-accent-foreground: oklch(0.985 0 0);
+  --lang-nodejs-accent: oklch(0.5012 0.1234 136.2147);
+  --lang-nodejs-accent-foreground: oklch(0.985 0 0);
+  --lang-python-accent: oklch(0.4567 0.1567 265.1234);
+  --lang-python-accent-foreground: oklch(0.985 0 0);
+  --lang-java-accent: oklch(0.5234 0.1689 21.5234);
+  --lang-java-accent-foreground: oklch(0.985 0 0);
+  --lang-csharp-accent: oklch(0.5123 0.1456 284.2541);
+  --lang-csharp-accent-foreground: oklch(0.985 0 0);
+  --lang-cpp-accent: oklch(0.4789 0.1567 263.1234);
+  --lang-cpp-accent-foreground: oklch(0.985 0 0);
+  --lang-go-accent: oklch(0.5345 0.1623 196.8945);
+  --lang-go-accent-foreground: oklch(0.985 0 0);
+  --lang-rust-accent: oklch(0.4845 0.1289 46.5234);
+  --lang-rust-accent-foreground: oklch(0.985 0 0);
+  --lang-php-accent: oklch(0.5012 0.1512 284.5123);
+  --lang-php-accent-foreground: oklch(0.985 0 0);
+  --lang-swift-accent: oklch(0.4732 0.1247 46.2007);
+  --lang-swift-accent-foreground: oklch(0.985 0 0);
+  --lang-kotlin-accent: oklch(0.5234 0.1489 284.1234);
+  --lang-kotlin-accent-foreground: oklch(0.985 0 0);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   ::selection {
     @apply bg-selection text-selection-foreground;
   }
+
   html {
     @apply scroll-smooth;
   }
+
   body {
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
@@ -241,15 +347,15 @@
       @apply !mt-0;
     }
 
-    &:first-child > h3:first-child {
+    &:first-child>h3:first-child {
       @apply !mt-0;
     }
 
-    > h3 {
+    >h3 {
       @apply !mt-16;
     }
 
-    > h3 + p {
+    >h3+p {
       @apply !mt-2;
     }
   }
@@ -342,11 +448,9 @@
       width: 2px;
       height: 100%;
       content: "";
-      background-color: color-mix(
-        in oklab,
-        var(--muted-foreground) 50%,
-        transparent
-      );
+      background-color: color-mix(in oklab,
+          var(--muted-foreground) 50%,
+          transparent);
     }
   }
 

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const ClaseFrontMatterSchema = z.object({
+    id: z.string(),
     title: z.string(),
     description: z.string().optional(),
     languages: z.array(z.string()).optional(),

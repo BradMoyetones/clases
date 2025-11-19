@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -31,10 +31,7 @@ export const Hero = () => {
                     inView
                 >
                     <div className="mb-8 rounded-full bg-accent py-1 pl-1 pr-3 text-sm flex items-center gap-2">
-                        <Link
-                            href="#"
-                            className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400"
-                        >
+                        <Link href="#" className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
                             <span className="h-6 px-2 bg-primary text-xs text-primary-foreground rounded-full flex gap-1 items-center justify-center">
                                 New
                                 <PartyPopper delay={500} className="size-3.5" animate />
@@ -86,7 +83,7 @@ export const Hero = () => {
                     delay={0.3}
                 >
                     <p className="block font-normal md:text-lg sm:text-base text-sm text-center mt-3 text-muted-foreground md:max-w-[660px] sm:max-w-[450px] text-balance">
-                        Aqui podras aprender las bases de la web entre ellos Javascrip, HTML, CSS.
+                        Aqui podras aprender las bases de la web entre ellos Javascript, HTML, CSS.
                     </p>
                 </MotionEffect>
 
@@ -100,16 +97,8 @@ export const Hero = () => {
                         delay={0.45}
                     >
                         <AnimateIcon animateOnHover="out" completeOnStop asChild>
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button
-                                    size="sm"
-                                    className="w-full !pr-5"
-                                    variant="default"
-                                    asChild
-                                >
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Button size="sm" className="w-full !pr-5" variant="default" asChild>
                                     <Link href="#">
                                         Empezar <ArrowRightIcon className="!size-5" />
                                     </Link>

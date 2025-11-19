@@ -1,10 +1,13 @@
-import { extractTOC, readFileFromSlug } from '@/lib/clases';
+import { extractTOC, getClaseContent, readFileFromSlug } from '@/lib/clases';
 import matter from 'gray-matter';
 import { mdxComponents } from '@/mdx-components';
 import { notFound } from 'next/navigation';
 import { createMDXComponent } from '@/lib/mdx';
 import { DocsCopyPage } from '@/components/docs-copy-page';
 import { DocsTableOfContents } from '@/components/docs-toc';
+import Badge from '@/components/badge';
+import { languages } from '@/lib/languajes';
+import { PreviewModal } from '@/components/preview-modal';
 
 type PageProps = {
     params: Promise<{
@@ -16,17 +19,14 @@ export default async function page(props: PageProps) {
     const { slug } = await props.params;
 
     // Obtener archivo MDX
-    const file = readFileFromSlug([...slug, 'README.mdx']);
+    const parsed = getClaseContent([...slug], 'README.mdx');
 
-    if (!file) return notFound();
+    if (!parsed) return notFound();
 
-    const text = file!.buffer.toString('utf-8');
-
-    const { data: doc, content } = matter(text);
+    const { meta: doc, content } = parsed;
 
     const toc = extractTOC(content);
 
-    // 2. --- Crear componente MDX dinámico ---
     const MDX = createMDXComponent(content);
 
     return (
@@ -41,9 +41,8 @@ export default async function page(props: PageProps) {
                                     {doc.title}
                                 </h1>
                                 <div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
-                                    <DocsCopyPage
-                                        page={content}
-                                    />
+                                    <PreviewModal src={`/api/clases/${doc.id}/index.html`} />
+                                    <DocsCopyPage page={content} />
                                 </div>
                             </div>
                             {doc.description && (
@@ -52,23 +51,19 @@ export default async function page(props: PageProps) {
                                 </p>
                             )}
                         </div>
+                        {doc.languages && doc.languages.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-4">
+                                {doc.languages?.map((lang) => {
+                                    const language = languages[lang];
+                                    const Icon = language.icon;
+                                    return <Badge key={lang} lang={lang} className={language.className} icon={Icon} />;
+                                })}
+                            </div>
+                        )}
                     </div>
                     <div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
                         <MDX components={mdxComponents} />
                     </div>
-                    <div className="w-full overflow-hidden">
-                        <div className='bg-muted px-2 py-4 rounded-t-lg flex items-center gap-2'>
-                            <div className='size-3 bg-red-400 aspect-square rounded-full' />
-                            <div className='size-3 bg-yellow-300/80 aspect-square rounded-full' />
-                            <div className='size-3 bg-green-600 aspect-square rounded-full' />
-                        </div>
-                        <iframe
-                            src={`/api/clases/${slug[0]}/index.html`}
-                            className="w-full h-[600px] rounded-b-lg border"
-                            loading="lazy"
-                        />
-                    </div>
-
                 </div>
                 <div className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-2 px-4 sm:flex md:px-0">
                     {/* Botones vecinos */}

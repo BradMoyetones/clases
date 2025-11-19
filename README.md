@@ -1,7 +1,3 @@
-# App de referencia
-
-https://app.formatocotizacion.com/es
-
 ## Creación de Logo
 
 - https://yqnn.github.io/svg-path-editor/
