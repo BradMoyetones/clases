@@ -1,13 +1,157 @@
 ---
-title: "Clase 02 – JavaScript y localStorage"
-description: "Introducción al localStorage y su uso en Javascript"
+title: "Clase 02: JavaScript Moderno y LocalStorage"
+description: "Creación de una To-Do App avanzada con persistencia de datos, Tailwind CSS v4 y APIs modernas del DOM."
 languages:
   - html
   - css
   - javascript
-difficulty: "beginner"
-duration: "45min"
+difficulty: "intermediate"
+duration: "60min"
 ---
 
-## Introducción  
-Aquí empieza el contenido…
+## Introducción
+
+En esta clase, hemos desarrollado una **To-Do App** completa. A diferencia de una lista de tareas básica, esta aplicación incluye características avanzadas como persistencia de datos, filtrado de tareas, modo oscuro y animaciones fluidas utilizando las últimas tecnologías web.
+
+Analizaremos cómo estructuramos la aplicación, el uso de **Tailwind CSS v4** para los estilos y la lógica robusta en **JavaScript**.
+
+---
+
+<Steps>
+
+<Step>
+### Estructura HTML y Templates
+
+En `index.html`, utilizamos una técnica muy eficiente para generar contenido dinámico: la etiqueta `<template>`.
+
+#### Uso de `<template>`
+En lugar de crear elementos HTML desde cero con JavaScript (`document.createElement`), definimos la estructura en el HTML pero oculta, y luego la clonamos cuando la necesitamos.
+
+```html title="index.html"
+<!-- Plantilla para una tarjeta de tarea -->
+<template id="card">
+    <div class="rowInAnimation bg-background p-6 rounded-2xl shadow-2xl/5" data-id>
+        <!-- Contenido de la tarjeta... -->
+    </div>
+</template>
+```
+
+Esto mantiene nuestro JavaScript más limpio y separa la estructura de la lógica.
+
+</Step>
+
+<Step>
+### Estilos con Tailwind CSS v4
+
+Hemos utilizado la versión más reciente de Tailwind CSS. En `src/input.css`, podemos ver cómo se configuran los temas y variables directamente en CSS.
+
+#### Configuración de Variables y Tema
+Tailwind v4 usa variables CSS nativas para definir el tema.
+
+```css title="src/input.css"
+@import "tailwindcss";
+
+:root {
+  --primary: oklch(0.6723 0.1606 244.9955);
+  --background: oklch(1 0 0);
+  /* ... otras variables */
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  /* ... mapeo de variables a utilidades de Tailwind */
+}
+```
+
+#### Animaciones Personalizadas
+Definimos animaciones clave (`keyframes`) directamente en el CSS para las transiciones de entrada de las tareas.
+
+```css title="src/input.css"
+@keyframes rowIn {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0px); opacity: 1; }
+}
+
+.rowInAnimation {
+  animation: rowIn 0.3s ease-out;
+}
+```
+
+</Step>
+
+<Step>
+### Lógica JavaScript Avanzada
+
+El corazón de la aplicación reside en `src/scripts.js`. Hemos estructurado el código en módulos lógicos para mantenerlo organizado.
+
+#### 1. Gestión del Estado (`TodoState`)
+Centralizamos toda la lógica de datos en un objeto `TodoState`. Esto incluye obtener, guardar, filtrar y modificar las tareas.
+
+**Persistencia con LocalStorage:**
+Usamos `localStorage` para que las tareas no se pierdan al recargar la página.
+
+```javascript title="src/scripts.js"
+const TodoState = {
+    // ...
+    save(todos) {
+        try {
+            // Convertimos el array de objetos a string para guardarlo
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getAll() {
+        // Leemos y convertimos de vuelta a objetos
+        const ordered = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        return ordered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    },
+    // ...
+};
+```
+
+#### 2. MutationObserver
+Usamos `MutationObserver` para detectar cambios en el DOM automáticamente. En este caso, observamos el input del formulario para cambiar dinámicamente el título del modal (de "Create Task" a "Update Task") según si el campo está vacío o no.
+
+```javascript title="src/scripts.js"
+var observer = new MutationObserver(function (mutations) {
+    // Lógica para actualizar el texto del modal
+});
+
+observer.observe(inputId, { attributes: true });
+```
+
+#### 3. View Transitions API
+Para lograr animaciones suaves al agregar o eliminar tareas, utilizamos la nueva **View Transitions API**.
+
+```javascript title="src/scripts.js"
+function renderCard(formData, prepend = true) {
+    // ... lógica de renderizado
+    
+    // Iniciamos una transición de vista
+    const transition = document.startViewTransition(() => {
+        if (prepend) {
+            container.insertBefore(card, container.firstChild);
+        } else {
+            container.appendChild(card);
+        }
+    });
+}
+```
+Esto permite que el navegador anime automáticamente los cambios en el DOM, creando una experiencia de usuario muy pulida.
+
+</Step>
+
+</Steps>
+
+## Conclusión
+
+Esta aplicación demuestra cómo combinar HTML semántico, estilos modernos con Tailwind v4 y JavaScript robusto para crear una aplicación web funcional y atractiva. Hemos aprendido a:
+
+1.  **Persistir datos** en el navegador con `localStorage`.
+2.  **Organizar el código** separando estado, UI y utilidades.
+3.  **Animar la interfaz** usando CSS y la View Transitions API.
+4.  **Reaccionar a cambios** con `MutationObserver`.
+
+¡Ahora tienes una base sólida para crear aplicaciones web interactivas más complejas!

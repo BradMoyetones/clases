@@ -1,13 +1,186 @@
 ---
-title: "Clase 01 – HTML Básico"
-description: "Introducción a HTML, etiquetas, estructura y primeros pasos"
+title: 'Clase 01: Fundamentos de HTML, CSS y JS'
+description: 'Análisis detallado de la estructura, estilos y lógica básica para crear un portafolio personal moderno.'
 languages:
-  - html
-  - css
-  - javascript
-difficulty: "beginner"
-duration: "45min"
+    - html
+    - css
+    - javascript
+difficulty: 'beginner'
+duration: '60min'
 ---
 
-## Introducción  
-Aquí empieza el contenido…
+## Introducción
+
+En esta clase, hemos construido la base de un **Portafolio Personal**. El objetivo fue crear una estructura semántica sólida con HTML5, aplicar estilos modernos y responsivos con CSS3, y añadir una pizca de interactividad con JavaScript.
+
+A continuación, desglosaremos cada parte del código para entender **qué** se hizo, **por qué** se hizo y **cómo** funcionan las propiedades utilizadas.
+
+---
+
+<Steps>
+
+<Step>
+### Estructura HTML Semántica
+
+El archivo `index.html` es el esqueleto de nuestra página. Hemos utilizado etiquetas semánticas de HTML5 para dar significado al contenido, lo cual es crucial para el SEO y la accesibilidad.
+
+#### 1. Configuración Inicial (`<head>`)
+
+En el `<head>`, definimos la configuración básica y cargamos recursos externos.
+
+```html title="index.html"
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Brad</title>
+    <!-- Estilos de normalización para asegurar consistencia entre navegadores -->
+    <link rel="stylesheet" href="./assets/normalize.css" />
+    <!-- Fuentes de Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter..." rel="stylesheet" />
+    <!-- Nuestros estilos personalizados -->
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <!-- Nuestro script para interactividad -->
+    <script src="./assets/scripts.js"></script>
+</head>
+```
+
+<Callout type="info">
+    **¿Por qué `normalize.css`?** Los navegadores tienen estilos por defecto que varían entre sí. `normalize.css`
+    "resetea" o estandariza estos estilos para que nuestra página se vea igual en Chrome, Firefox, Safari, etc.
+</Callout>
+
+#### 2. Organización del Contenido (`<body>`)
+
+Dentro del `<body>`, usamos etiquetas específicas para cada sección:
+
+-   **`<header>`**: Contiene la navegación principal.
+-   **`<nav>`**: Agrupa los enlaces de navegación.
+-   **`<main>`**: Envuelve el contenido principal de la página.
+-   **`<section>`**: Divide el contenido en bloques temáticos (Hero, About, Projects, Contact).
+-   **`<article>`**: Se usa para contenido independiente, como cada tarjeta de proyecto o experiencia laboral.
+-   **`<footer>`**: Pie de página con derechos de autor.
+
+</Step>
+
+<Step>
+### Estilos CSS Modernos
+
+En `styles.css`, transformamos el esqueleto HTML en una interfaz visualmente atractiva.
+
+#### 1. Variables CSS (Custom Properties)
+
+Definimos colores y fuentes en `:root` para mantener la consistencia y facilitar cambios futuros.
+
+```css title="styles.css"
+:root {
+    --primary: #7b2cbf; /* Color principal (morado) */
+    --secondary: #9d4edd; /* Color secundario (lila) */
+    --accent: #9d4edd4b; /* Acento con transparencia */
+    --foreground: #fff; /* Fondo blanco */
+    --font-onest: 'Onest Variable'; /* Tipografía principal */
+}
+```
+
+#### 2. Layout con Flexbox
+
+Flexbox es la herramienta principal que usamos para alinear elementos en una dimensión (fila o columna).
+
+**Ejemplo: El Header**
+
+```css title="styles.css"
+.portafolio-header {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: space-between; /* Separa los elementos a los extremos */
+    /* ... */
+    position: sticky; /* Se queda fijo al hacer scroll */
+    top: 10px;
+    backdrop-filter: blur(50px); /* Efecto de vidrio esmerilado */
+}
+```
+
+-   **`display: flex`**: Activa el modelo de caja flexible.
+-   **`justify-content: space-between`**: Distribuye el espacio disponible entre los hijos, empujándolos a los bordes.
+-   **`backdrop-filter: blur(50px)`**: Crea un efecto moderno de desenfoque detrás del header, muy popular en interfaces actuales (estilo "glassmorphism").
+
+#### 3. Layout con CSS Grid
+
+Grid es ideal para estructuras bidimensionales, como nuestra galería de proyectos.
+
+**Ejemplo: Galería de Proyectos**
+
+```css title="styles.css"
+.portafolio-projects .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columnas de igual tamaño */
+    gap: 10px; /* Espacio entre tarjetas */
+}
+```
+
+-   **`grid-template-columns: 1fr 1fr 1fr`**: Crea tres columnas que ocupan una fracción (`1fr`) del espacio disponible cada una.
+
+#### 4. Diseño Responsivo (Media Queries)
+
+Usamos `@media` para adaptar el diseño a pantallas más pequeñas (móviles y tablets).
+
+```css title="styles.css"
+@media screen and (width < 870px) {
+    .portafolio-hero {
+        flex-direction: column; /* Cambia de fila a columna */
+    }
+    /* ... */
+}
+
+@media screen and (width < 550px) {
+    .portafolio-projects .cards {
+        grid-template-columns: 1fr; /* Cambia a 1 sola columna */
+    }
+}
+```
+
+Esto asegura que en un celular, los elementos se apilen verticalmente en lugar de apretarse horizontalmente.
+
+</Step>
+
+<Step>
+### Interactividad con JavaScript
+
+Finalmente, en `scripts.js`, añadimos una funcionalidad sencilla pero esencial para móviles: el menú lateral (sidebar).
+
+#### Lógica del Sidebar
+
+Controlamos la visibilidad del menú cambiando clases o estilos directamente en el DOM.
+
+```javascript title="scripts.js"
+let isOpen = false;
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const background = document.getElementById('sidebar-back');
+
+    // Operador ternario para alternar estados
+    sidebar.style.transform = !isOpen ? 'translateX(0)' : 'translateX(300px)';
+    background.style.opacity = !isOpen ? '1' : '0';
+    background.style.pointerEvents = !isOpen ? 'all' : 'none';
+
+    isOpen = !isOpen; // Invierte el estado
+}
+```
+
+-   **`document.getElementById`**: Selecciona elementos del HTML por su ID.
+-   **`style.transform`**: Movemos el sidebar dentro y fuera de la pantalla usando `translateX`.
+-   **Estado (`isOpen`)**: Una variable booleana rastrea si el menú está abierto o cerrado.
+
+</Step>
+
+</Steps>
+
+## Conclusión
+
+En esta primera clase, hemos cubierto el flujo completo de desarrollo frontend básico:
+
+1.  Estructurar el contenido con **HTML semántico**.
+2.  Diseñar la apariencia con **CSS** (Variables, Flexbox, Grid).
+3.  Añadir lógica de interfaz con **JavaScript**.
+
+¡Este portafolio es una base excelente para seguir añadiendo más secciones y funcionalidades!

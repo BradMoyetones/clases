@@ -1,5 +1,4 @@
-import { extractTOC, getClaseContent, readFileFromSlug } from '@/lib/clases';
-import matter from 'gray-matter';
+import { extractTOC, getClaseContent } from '@/lib/clases';
 import { mdxComponents } from '@/mdx-components';
 import { notFound } from 'next/navigation';
 import { createMDXComponent } from '@/lib/mdx';

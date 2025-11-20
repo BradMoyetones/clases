@@ -1,4 +1,6 @@
-import { getTableOfContents, TableOfContents } from "fumadocs-core/server";
+import { getTableOfContents } from 'fumadocs-core/content/toc';
+import { TableOfContents } from 'fumadocs-core/toc';
+
 import fs from "node:fs"
 import path from "node:path"
 import { ClaseFrontMatter, ClaseFrontMatterSchema } from "./schemas/clase";
