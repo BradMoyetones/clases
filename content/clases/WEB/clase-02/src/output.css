@@ -9,9 +9,7 @@
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-slate-200: oklch(92.9% 0.013 255.508);
     --color-slate-600: oklch(44.6% 0.043 257.281);
-    --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
-    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -375,11 +373,17 @@
   .border-accent {
     border-color: var(--accent);
   }
-  .border-gray-300 {
-    border-color: var(--color-gray-300);
+  .border-border {
+    border-color: var(--border);
   }
-  .border-white {
-    border-color: var(--color-white);
+  .border-foreground {
+    border-color: var(--foreground);
+  }
+  .border-foreground\/20 {
+    border-color: var(--foreground);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--foreground) 20%, transparent);
+    }
   }
   .bg-accent {
     background-color: var(--accent);
@@ -404,9 +408,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--destructive) 70%, transparent);
     }
-  }
-  .bg-gray-50 {
-    background-color: var(--color-gray-50);
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
@@ -715,6 +716,13 @@
       }
     }
   }
+  .hover\:bg-muted {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--muted);
+      }
+    }
+  }
   .hover\:bg-primary {
     &:hover {
       @media (hover: hover) {
@@ -768,6 +776,40 @@
           translate: var(--tw-translate-x) var(--tw-translate-y);
         }
       }
+    }
+  }
+  .dark\:bg-background {
+    &:where(.dark, .dark *) {
+      background-color: var(--background);
+    }
+  }
+  .dark\:bg-card {
+    &:where(.dark, .dark *) {
+      background-color: var(--card);
+    }
+  }
+  .dark\:bg-linear-to-t {
+    &:where(.dark, .dark *) {
+      --tw-gradient-position: to top;
+      @supports (background-image: linear-gradient(in lab, red, red)) {
+        --tw-gradient-position: to top in oklab;
+      }
+      background-image: linear-gradient(var(--tw-gradient-stops));
+    }
+  }
+  .dark\:from-foreground\/10 {
+    &:where(.dark, .dark *) {
+      --tw-gradient-from: var(--foreground);
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-gradient-from: color-mix(in oklab, var(--foreground) 10%, transparent);
+      }
+      --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+    }
+  }
+  .dark\:to-transparent {
+    &:where(.dark, .dark *) {
+      --tw-gradient-to: transparent;
+      --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
     }
   }
   .\[\&\>svg\]\:size-5 {

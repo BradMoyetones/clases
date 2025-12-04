@@ -218,7 +218,7 @@ const DOMUtils = {
 
     // Formatear fecha actual
     formatNow(){
-        return new Date(dateString).toLocaleDateString("en-EU", {
+        return new Date().toLocaleDateString("en-EU", {
             day: "2-digit",
             month: "short",
             year: "numeric",
@@ -549,355 +549,282 @@ const CardActions = {
 // ==========================================
 // FILTER MANAGEMENT - Gestión de filtros
 // ==========================================
-const FilterManager = {}
+const FilterManager = {
+    init() {
+        const tabs = document.querySelectorAll('[data-tab]')
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const filterType = e.currentTarget.getAttribute('data-tab')
+                this.applyFilter(filterType)
+            })
+        })
+    },
 
+    applyFilter(filterType){
+        TodoState.currentFilter = filterType
 
+        // Actualiza el estilo del tab
+        this.updateTabStyles(filterType)
 
+        // Re render de las cards
+        UIManager.renderAllCards()
+    },
 
-// DATA
-let data = JSON.parse(localStorage.getItem("todos")) || []
-const cardTemplate = document.getElementById("card")
-const container = document.getElementById("cards")
-const emptyMessageTemplate = document.getElementById("empty-message")
-const form = document.getElementById("form")
-const toolbar = document.getElementById("toolbar")
-const inputId = document.getElementById("form-input-id")
+    updateTabStyles(activeFilter){
+        const tabs = document.querySelectorAll('[data-tab]')
+        tabs.forEach(tab => {
+            const tabFilter = tab.getAttribute('data-tab')
+            const isActive = tabFilter === activeFilter
+            const badge = tab.querySelector('span')
 
+            if(isActive){
+                DOMUtils.addClasses(tab, 'text-primary', 'font-bold')
+                DOMUtils.removeClasses(tab, 'text-muted-foreground')
 
-// Modal -----------------------------------------------------------
-const overlay = document.getElementById("modalOverlay");
-const modal = document.getElementById("modalBox");
+                if(badge){
+                    DOMUtils.addClasses(badge, 'bg-primary', 'text-primary-foreground')
+                    DOMUtils.removeClasses(badge, 'bg-muted-foreground/20')
+                }
+            }else {
+                DOMUtils.removeClasses(tab, 'text-primary', 'font-bold')
+                DOMUtils.addClasses(tab, 'text-muted-foreground')
 
-let isOpen = false
-
-function openModal() { 
-    overlay.classList.remove("opacity-0", "pointer-events-none")
-    modal.classList.remove("scale-90", "opacity-0")
-    modal.classList.add("scale-100", "opacity-100")
-    isOpen = true
+                if(badge){
+                    DOMUtils.removeClasses(badge, 'bg-primary', 'text-primary-foreground')
+                    DOMUtils.addClasses(badge, 'bg-muted-foreground/20')
+                }
+            }
+        })
+    }
 }
 
-function closeModal() { 
-    modal.classList.add("scale-90", "opacity-0")
-    modal.classList.remove("scale-100", "opacity-100")
-    overlay.classList.add("opacity-0", "pointer-events-none")
-    isOpen = false
-    formReset()
-}
+// ========================================================
+// FORM HANDLER - Manejo del formulario
+// ========================================================
+const FormHandler = {
+    form: null,
 
-function toggleModal(){
-    isOpen ? closeModal() : openModal()
-}
-// ----------------------------------------------------------------
+    init(){
+        this.form = DOMUtils.getElement(SELECTORS.FORM)
 
+        this.form?.addEventListener('submit', (e) => {
+            e.preventDefault()
+            this.handleSubmit(e)
+        })
+    },
 
-var observer = new MutationObserver(function(mutations){
-    mutations.forEach(function (mutation) {
-        console.log(mutation.target.value);
+    handleSubmit(e) {
+        const formData = new FormData(this.form)
 
-        if(mutation.target.value.trim().length === 0){
-            modal.querySelector('[data-title-modal]').textContent = "Create Task"
-            modal.querySelector('[data-description-modal]').textContent = "Complete input data for todo"
-            modal.querySelector('[data-button-modal]').textContent = "Create"
-        }else {
-            modal.querySelector('[data-title-modal]').textContent = "Update Task"
-            modal.querySelector('[data-description-modal]').textContent = "Complete input data for todo"
-            modal.querySelector('[data-button-modal]').textContent = "Save"
+        const title = formData.get('title')?.trim() || ''
+        const description = formData.get('description')?.trim() || ''
+        const isArchived = formData.get('isArchived')?.trim() || ''
+        const editingId = formData.get('id')?.trim() || ''
+
+        if(title.length === 0){
+            NotificationManager.show('Title is required', 'error')
+            return
         }
-    });
-})
 
-var config = { attributes: true };
-
-observer.observe(inputId, config)
-
-
-function formReset(){
-    inputId.value = ""
-    form.reset()
-}
-
-function updateStats(){
-    if(!toolbar || !Array.isArray(data)) return
-
-    const allTasks = toolbar.querySelector('[data-all-length]')
-    const openTasks = toolbar.querySelector('[data-open-length]')
-    const closedTasks = toolbar.querySelector('[data-closed-length]')
-    const archivedTasks = toolbar.querySelector('[data-archived-length]')
-
-    allTasks.textContent = data.length
-    openTasks.textContent = data.filter(todo => todo.completedAt === null).length
-    closedTasks.textContent = data.filter(todo => todo.completedAt).length
-    archivedTasks.textContent = data.filter(todo => todo.isArchived).length
-}
-
-// Definicion de fecha y dia de la semana al inicio
-document.querySelector('[data-now]').textContent = new Date().toLocaleDateString("en-EU", {
-    weekday: "long",
-    month: "short",
-    day: "2-digit",
-    year: "numeric"
-})
-
-function emptyMessage(){
-    const empty = emptyMessageTemplate.content.cloneNode(true)
-    container.appendChild(empty)
-}
-
-function renderCard(formData, prepend = true) {
-    if(!formData) return
-
-    const emptyMessage = document.querySelector('[data-empty-message]')
-    if(emptyMessage) emptyMessage.remove()
-
-    const card = cardTemplate.content.cloneNode(true)
-    const cardDiv = card.querySelector("[data-id]")
-
-    cardDiv.setAttribute("data-id", formData.id)
-
-    addViewTransitionAttributes(cardDiv, formData.id)
-    card.querySelector("[data-title]").textContent = formData.title
-    card.querySelector("[data-description]").textContent = formData.description
-    card.querySelector("[data-detail]").textContent = new Date(formData.createdAt).toLocaleTimeString("es-CO", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true
-    })
-
-    const editBtn = card.querySelector(".edit")
-    const deleteBtn = card.querySelector(".delete")
-
-    editBtn.onclick = () => selectRow(formData.id)
-    deleteBtn.onclick = () => destroy(formData.id)
-
-    const toggleButtonArchive = card.querySelector(".toggle-archive")
-    const toggleButtonComplete = card.querySelector(".toggle-complete")
-
-    toggleButtonArchive.onclick = () => toggleArchive(formData.id)
-    toggleButtonComplete.onclick = () => toggleComplete(formData.id)
-
-
-    changeClassRow(card, formData)
-    
-    const transition = document.startViewTransition(() => {
-        if(prepend){
-            container.insertBefore(card, container.firstChild);
-        }else {
-            container.appendChild(card)
+        if(editingId) {
+            this.updateTodo(editingId, { title, description, isArchived })
+        } else {
+            this.createTodo({ title, description, isArchived })
         }
-    })
-    transition.finished
-}
+    },
 
-function addViewTransitionAttributes(el, id){
-    el.setAttribute('style', `view-transition-class: dataRow; view-transition-name: dataRow-${id}`)
-}
+    createTodo(data) {
+        const newTodo = TodoState.create(data)
 
-function destroy(id){
-    if(!Array.isArray(data)) return
+        const shouldBeVisible = CardActions.shouldTodoBeVisible(newTodo)
+        if(shouldBeVisible){
+            UIManager.renderCard(newTodo, true)
+        }
 
-    data = data.filter(todo => todo.id !== id)
-    localStorage.setItem("todos", JSON.stringify(data))
+        UIManager.updateStats()
+        ModalManager.close()
+        NotificationManager.show('Created successfully', 'success')
+    },
 
-    removeRow(id)
-    updateStats()
+    updateTodo(id, updates){
+        const todo = TodoState.findById(id)
 
-    if(data.length === 0){
-        emptyMessage()
+        if(!todo) return
+
+        // Preservar campos importantes
+        const updatedTodo = TodoState.update(id, {
+            ...updates,
+            createdAt: todo.createdAt,
+            completedAt: todo.completedAt
+        })
+
+        if(!updatedTodo) return
+
+        const shouldBeVisible = CardActions.shouldTodoBeVisible(updatedTodo)
+
+        if(shouldBeVisible){
+            UIManager.updateCard(id, updatedTodo)
+        }else {
+            UIManager.removeCard(id)
+        }
+        
+        UIManager.updateStats()
+        ModalManager.close()
+        NotificationManager.show('Updated successfully', 'success')
     }
 }
 
-function removeRow(id){
-    const row = container.querySelector(`div[data-id="${id}"]`)
+// ===============================================
+// NOTIFICATION MANAGER -Gestión de notificaciones
+// ===============================================
+const NotificationManager = {
+    show(message, type = 'success'){
+        if(typeof toast !== 'function'){
+            console.warn('Toast library not loaded')
+            return
+        }
 
-    if(!row) return
-
-    row.classList.add('fade-out')
-
-    const transition = document.startViewTransition(() => {
-        row.remove()
-    })
-    transition.finished
-}
-
-function selectRow(id){
-    if(!Array.isArray(data) || !form) return
-    const toDo = data.find(todo => todo.id === id)
-    if(!toDo) return
-    form.elements['id'].value= toDo.id
-    form.elements['title'].value= toDo.title
-    form.elements['description'].value= toDo.description
-    form.elements['isArchived'].checked = Boolean(toDo.isArchived)
-    toggleModal()
-}
-
-function updatedRow(id, todo){
-    const row = container.querySelector(`div[data-id="${id}"]`)
-
-    if(!row) return
-
-    row.querySelector('[data-title]').textContent = todo.title
-    row.querySelector('[data-description]').textContent = todo.description
-    row.querySelector("[data-detail]").textContent = new Date(todo.createdAt).toLocaleTimeString("es-CO", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true
-    })
-
-    changeClassRow(row, todo)
-}
-
-function toggleArchive(id){
-    const row = container.querySelector(`div[data-id="${id}"]`)
-    const index = data.findIndex(todo => todo.id === id)
-    let todo = data.find(todo => todo.id === id)
-
-    todo = {
-        ...todo,
-        isArchived: todo.isArchived ? false : true
-    }
-
-    data[index] = todo
-    localStorage.setItem("todos", JSON.stringify(data))
-    updateStats()
-}
-
-function changeClassRow(row, todo) {
-    if(!todo.completedAt){
-        row.querySelector('[data-title]').classList.remove("line-through")
-
-        // Boton
-        row.querySelector('.toggle-complete').classList.remove("bg-primary")
-        row.querySelector('.toggle-complete').classList.add("bg-muted")
-
-        // Svg
-        row.querySelector('.toggle-complete').querySelector('svg').classList.remove("opacity-100")
-        row.querySelector('.toggle-complete').querySelector('svg').classList.add("opacity-0")
-    } else {
-        row.querySelector('[data-title]').classList.add("line-through")
-
-        // Boton
-        row.querySelector('.toggle-complete').classList.add("bg-primary")
-        row.querySelector('.toggle-complete').classList.remove("bg-muted")
-
-        // Svg
-        row.querySelector('.toggle-complete').querySelector('svg').classList.add("opacity-100")
-        row.querySelector('.toggle-complete').querySelector('svg').classList.remove("opacity-0")
-    }
-}
-
-function toggleComplete(id){
-    const row = container.querySelector(`div[data-id="${id}"]`)
-    const index = data.findIndex(todo => todo.id === id)
-    let todo = data.find(todo => todo.id === id)
-
-    
-    todo = {
-        ...todo,
-        completedAt: todo.completedAt ? null : new Date().toISOString()
-    }
-    
-    changeClassRow(row, todo)
-
-    data[index] = todo
-    localStorage.setItem("todos", JSON.stringify(data))
-
-    updateStats()
-}
-
-function renderCards(){
-    container.innerHTML = ''
-
-    if(!Array.isArray(data) || data.length === 0){
-        emptyMessage()
-        return
-    }
-
-    data.map(todo => renderCard(todo, false))
-}
-
-renderCards()
-updateStats()
-
-form.addEventListener("submit", function(e){
-    e.preventDefault()
-
-    const formData = new FormData(form)
-
-    const title = formData.get('title')
-    const description = formData.get('description')
-    const isArchived = formData.get('isArchived')
-    const editingId = formData.get('id')
-
-    console.log(title, description, isArchived);
-    
-    if(title.trim().length === 0){
-        toast({
-            message: "Title is required",
+        const config = {
+            message,
             duration: 4000,
             autoClose: true,
             pauseOnHover: true
-        });
-        return
-    }
-
-    if(editingId.trim().length === 0){
-        const todo = {
-            id: crypto.randomUUID(),
-            title: title,
-            description: description,
-            isArchived: isArchived ? true : false,
-            createdAt: new Date().toISOString(),
-            completedAt: null
         }
-        data.push(todo)
-        localStorage.setItem("todos", JSON.stringify(data))
-        renderCard(todo)
-        toggleModal()
-        toast({
-            message: "Created successfully",
-            showIcon: true,
-            iconAnimation: "default",
-            iconTimingFunction: "ease",
-            iconBorderRadius: "50%",
-            iconType: "success",
-        });
-        form.reset()
-        updateStats()
-    }else {
-        const index = data.findIndex(todo => todo.id === editingId)
-        const todo = data.find(todo => todo.id === editingId)
-        if(index !== -1){
-            const updatedTodo = {
-                id: editingId,
-                title: title,
-                description: description,
-                isArchived: isArchived ? true : false,
-                createdAt: todo.createdAt,
-                completedAt: todo.completedAt
+
+        if(type === 'success'){
+            config.showIcon = true
+            config.iconAnimation = 'default'
+            config.iconTimingFunction = 'ease'
+            config.iconBorderRadius = '50%'
+            config.iconType = 'success'
+        }
+
+        toast(config)
+    }
+}
+
+
+const ThemeManager = {
+    themes: {
+        LIGHT: 'light',
+        DARK: 'dark',
+        SYSTEM: 'system'
+    },
+  
+    currentTheme: null,
+    themeButton: null,
+  
+    init() {
+        this.themeButton = document.querySelector(SELECTORS.THEME_TOGGLE);
+        
+        // Cargar tema guardado o usar sistema por defecto
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || this.themes.SYSTEM;
+        this.setTheme(savedTheme, false);
+        
+        // Event listener para el botón
+        this.themeButton?.addEventListener('click', () => this.cycleTheme());
+        
+        // Escuchar cambios en preferencias del sistema
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (this.currentTheme === this.themes.SYSTEM) {
+                this.applyTheme(this.themes.SYSTEM);
             }
-            data[index] = updatedTodo
-            localStorage.setItem("todos", JSON.stringify(data))
-
-            updatedRow(editingId, updatedTodo)
-            toggleModal()
-            toast({
-                message: "Updated successfully",
-                showIcon: true,
-                iconAnimation: "default",
-                iconTimingFunction: "ease",
-                iconBorderRadius: "50%",
-                iconType: "success",
-            });
-            form.reset()
-            inputId.value = ""
-            updateStats()
+        });
+    },
+  
+    // Ciclar entre light → dark → system
+    cycleTheme() {
+        const themeOrder = [this.themes.LIGHT, this.themes.DARK, this.themes.SYSTEM];
+        const currentIndex = themeOrder.indexOf(this.currentTheme);
+        const nextTheme = themeOrder[(currentIndex + 1) % themeOrder.length];
+        
+        this.setTheme(nextTheme, true);
+    },
+  
+    // Establecer el tema
+    setTheme(theme, save = true) {
+        this.currentTheme = theme;
+        
+        if (save) {
+            localStorage.setItem(THEME_STORAGE_KEY, theme);
         }
+        
+        this.applyTheme(theme);
+        this.updateButtonIcon(theme);
+    },
+  
+    // Aplicar el tema al documento
+    applyTheme(theme) {
+        const html = document.documentElement;
+        
+        if (theme === this.themes.DARK) {
+            html.classList.add('dark');
+        } else if (theme === this.themes.LIGHT) {
+            html.classList.remove('dark');
+        } else if (theme === this.themes.SYSTEM) {
+            // Detectar preferencia del sistema
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+    },
+  
+    // Actualizar el icono del botón según el tema
+    updateButtonIcon(theme) {
+        if (!this.themeButton) return;
+        
+        const icons = {
+            [this.themes.LIGHT]: `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+                </svg>
+            `,
+            [this.themes.DARK]: `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                </svg>
+            `,
+            [this.themes.SYSTEM]: `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor">
+                    <rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/>
+                </svg>
+            `
+        };
+        
+        this.themeButton.innerHTML = icons[theme] || icons[this.themes.SYSTEM];
+    },
+  
+    // Obtener el tema actual
+    getCurrentTheme() {
+        return this.currentTheme;
     }
-})
+};
+
+
+window.toggleModal = () => ModalManager.toggle()
+window.openModal = () => ModalManager.open()
+window.closeModal = () => ModalManager.close()
+
+function initApp(){
+    DOMUtils.getElement(SELECTORS.DATE_DISPLAY).textContent = DOMUtils.formatNow()
+
+    ThemeManager.init()
+
+    ModalManager.init()
+    UIManager.init()
+    FilterManager.init()
+    FormHandler.init()
+
+    // Renderizado estado inicial
+    UIManager.renderAllCards()
+    UIManager.updateStats()
+}
+
+if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initApp)
+} else {
+    initApp()
+}
