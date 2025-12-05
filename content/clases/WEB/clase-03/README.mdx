@@ -1,0 +1,202 @@
+---
+title: "Clase de Fundamentos JavaScript: Ejercicios de Arreglos y Objetos"
+description: "Colección de 10 ejercicios para practicar métodos esenciales de arrays (filter, map, reduce), manipulación de strings y lógica de objetos en JavaScript."
+languages:
+  - javascript
+difficulty: "basic-to-advanced"
+duration: "90min"
+---
+
+# 📝 Ejercicios de Fundamentos de JavaScript
+
+¡Hola! Estos 10 ejercicios están diseñados para poner a prueba y afianzar tus conocimientos en la manipulación de **Arrays**, **Objetos** y **Strings** en JavaScript. ¡Concéntrate y aplica los métodos nativos!
+
+---
+
+## 🟢 Nivel Básico (Green)
+
+Estos ejercicios se centran en el uso básico de bucles o métodos fundamentales de arrays como `filter` o `forEach`.
+
+### 🟩 Ejercicio 1 — Contar elementos en un array
+
+**Instrucciones:** Escribe una función llamada `countGreaterThanTen(nums)` que reciba un array de números y retorne cuántos son **mayores que 10**.
+
+**Ejemplo:** `countGreaterThanTen([5, 12, 20, 1])` &rarr; `2`
+
+```js
+function countGreaterThanTen(nums) {
+  // ...
+}
+````
+
+### 🟩 Ejercicio 2 — Filtrar objetos
+
+**Instrucciones:** Crea una función `filterActive(users)` que reciba un array de objetos (`{ name: "Juan", active: true/false }`). La función debe retornar **SOLO** los usuarios con `active: true`.
+
+**Ejemplo:** `filterActive([{name:"Ana",active:true}, {name:"Luis",active:false}])` → `[{name:"Ana",active:true}]`
+
+```js
+function filterActive(users) {
+  // ...
+}
+```
+
+### 🟩 Ejercicio 3 — Invertir un string
+
+**Instrucciones:** Crea una función `reverseString(str)` que devuelva el string invertido. Piensa en cómo convertir el string a un array para manipularlo.
+
+**Ejemplo:** `reverseString("hola")` → `"aloh"`
+
+```js
+function reverseString(str) {
+  // ...
+}
+```
+
+-----
+
+## 🟡 Nivel Intermedio (Yellow)
+
+Estos ejercicios requieren el uso de métodos más avanzados como `reduce` o la aplicación de lógica iterativa más compleja.
+
+### 🟨 Ejercicio 4 — Sumar los precios de un carrito
+
+<Callout title="Aplica Reduce">
+El método `reduce` es ideal para esta tarea, ya que su objetivo es reducir un array a un único valor (la suma total).
+</Callout>
+
+**Instrucciones:** Tienes un array de objetos tipo carrito (`{ producto: "Mouse", precio: 50 }`). Crea una función `getTotal(cart)` que sume todos los precios.
+
+**Ejemplo:** `getTotal([{p:"Mouse",precio:50},{p:"Teclado",precio:100}])` → `150`
+
+```js
+function getTotal(cart) {
+  // ...
+}
+```
+
+### 🟨 Ejercicio 5 — Obtener el mayor número
+
+**Instrucciones:** Crear una función `maxNumber(arr)` que retorne el mayor número del array. Puedes usar un bucle o el método `reduce`.
+
+**Ejemplo:** `maxNumber([10, 50, 7])` → `50`
+
+```js
+function maxNumber(arr) {
+  // ...
+}
+```
+
+### 🟨 Ejercicio 6 — Contar vocales
+
+**Instrucciones:** Crea una función `countVowels(str)` que cuente cuántas vocales (a, e, i, o, u, mayúsculas o minúsculas) tiene un string. Considera convertir el string a minúsculas para simplificar.
+
+**Ejemplo:** `countVowels("javascript")` → `3`
+
+```js
+function countVowels(str) {
+  // ...
+}
+```
+
+-----
+
+## 🟠 Nivel Desafiante (Orange)
+
+Estos ejercicios implican manipulación avanzada de estructuras de datos y requieren una comprensión más profunda de los métodos de array.
+
+### 🟧 Ejercicio 7 — Aplanar arrays
+
+<Callout title="Arrays Anidados">
+La función debe tomar un array que puede contener otros arrays anidados (subarrays) y devolver un **único** array con todos los elementos. Busca un método moderno para arrays o intenta implementar una solución con `reduce`.
+</Callout>
+
+**Instrucciones:** Crea la función `flatten(arr)` que reciba un array con subarrays y devuelva un solo array con todos los valores.
+
+**Ejemplo:** `flatten([1, [2,3], [4,5]])` → `[1, 2, 3, 4, 5]`
+
+```js
+function flatten(arr) {
+  // ...
+}
+```
+
+### 🟧 Ejercicio 8 — Agrupar por propiedad
+
+<Callout title="Transformación Array a Objeto">
+Debes transformar un **array** de objetos en un **objeto** donde las claves sean los valores de una propiedad específica (`prop`). El método `reduce` es la clave aquí.
+</Callout>
+
+**Instrucciones:** Crea una función `groupBy(arr, prop)` que reciba un array de objetos y un string "prop". Debe retornar un objeto agrupando los elementos por esa propiedad.
+
+```js
+function groupBy(arr, prop) {
+  // ...
+}
+
+// Ejemplo de Uso:
+/*
+groupBy([
+  {name:"Ana", city:"Bogota"},
+  {name:"Luis", city:"Bogota"},
+  {name:"Sara", city:"Medellin"}
+], "city")
+
+→ {
+   Bogota: [{name:"Ana",city:"Bogota"}, {name:"Luis",city:"Bogota"}],
+   Medellin: [{name:"Sara",city:"Medellin"}]
+}
+*/
+```
+
+-----
+
+## 🔴 Nivel Experto (Red)
+
+Estos ejercicios requieren una combinación de técnicas y un buen entendimiento del contexto `this` en JavaScript.
+
+### 🟥 Ejercicio 9 — Simular una mini “base de datos”
+
+<Callout title="Contexto 'this' y Objetos">
+Debes usar la palabra clave `this` para acceder y manipular la propiedad `data` (el estado interno del objeto).
+</Callout>
+
+**Instrucciones:** Completa los métodos del objeto `database`. Debe poder:
+
+  * Añadir un usuario (`add(obj)`).
+  * Buscar por id (`get(id)`).
+  * Eliminar por id (`delete(id)`).
+
+```js
+const database = {
+  data: [],
+
+  add(obj) {
+    // ...
+  },
+
+  get(id) {
+    // ...
+  },
+
+  delete(id) {
+    // ...
+  }
+};
+```
+
+### 🟥 Ejercicio 10 — Resolver una expresión
+
+<Callout title="Parseo de Strings - ¡No uses eval()\!">
+Localiza el operador matemático (+, -, \*, /) y separa los dos números (operandos) para realizar la operación manualmente.
+</Callout>
+
+**Instrucciones:** Crea una función `calc(expr)` que reciba strings tipo: `"2+3"`, `"10-4"`, `"7*3"`, `"12/3"` y retorne el resultado.
+
+**Ejemplo:** `calc("10-4")` → `6`
+
+```js
+function calc(expr) {
+  // ...
+}
+```

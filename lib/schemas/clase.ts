@@ -5,7 +5,7 @@ export const ClaseFrontMatterSchema = z.object({
     title: z.string(),
     description: z.string().optional(),
     languages: z.array(z.string()).optional(),
-    difficulty: z.enum(["beginner", "intermediate", "advanced"]).optional(),
+    difficulty: z.enum(["beginner", "intermediate", "advanced", "basic-to-advanced"]).optional(),
     duration: z.string().optional(),
     index: z.boolean().default(true),
 });

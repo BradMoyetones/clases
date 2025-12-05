@@ -1,13 +1,15 @@
 "use client"
+
 import { IconCheck, IconCopy } from "@tabler/icons-react"
+
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { Button } from "@/components/ui/button"
 
-export function DocsCopyPage({ page }: { page: string }) {
+export function DocsCopyPage({ page }: { page: string; url?: string }) {
   const { copyToClipboard, isCopied } = useCopyToClipboard()
 
   return (
-    <div className="bg-secondary group/buttons relative flex rounded-lg *:[[data-slot=button]]:focus-visible:relative *:[[data-slot=button]]:focus-visible:z-10">
+    <div className="bg-secondary group/buttons relative flex rounded-lg *:data-[slot=button]:focus-visible:relative *:data-[slot=button]:focus-visible:z-10">
       <Button
         variant="secondary"
         size="sm"
