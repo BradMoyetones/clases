@@ -46,7 +46,7 @@ function getMDXFiles(dir: string): string[] {
         throw new Error(`Directory not found: ${dir}`);
     }
 
-    return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
+    return fs.readdirSync(dir).filter((file) => path.extname(file).toLowerCase() === '.mdx');
 }
 
 function readMDXFile(filePath: string) {
@@ -99,34 +99,46 @@ export function getContent(type: string[]) {
 // --- Nueva función para leer un único archivo ---
 // Recibe la ruta inicial fija (["clases", "WEB"]) y el slug dinámico (ej: ["tema-1", "subtema-a"])
 export function getSingleContent(initialPath: string[], slug: string[]): MDXItem | null {
-    // 1. Divide la ruta:
-    // El último elemento del array 'slug' es el nombre del archivo (fileSlug)
+    // 1. Divide la ruta y construye el DIR PATH
     const fileSlug = slug[slug.length - 1]; 
-    
-    // Los demás elementos forman el camino al directorio (contentPath)
     const contentPath = slug.slice(0, -1);
     
-    // 2. Construye la ruta completa al archivo MDX
-    // Une la ruta inicial, la ruta del contenido y el nombre del archivo
-    const filePath = path.join(
+    const dirPath = path.join(
         process.cwd(), 
         'content', 
         ...initialPath, 
-        ...contentPath, // Directorios (ej: tema-1)
-        `${fileSlug}.mdx` // Archivo (ej: subtema-a.mdx)
+        ...contentPath
     );
+    
+    // 2. Definimos el nombre que buscamos, estandarizado a minúsculas
+    const searchFileNameLower = `${fileSlug}.mdx`.toLowerCase();
 
-    // Verifica si el archivo existe antes de intentar leerlo
-    if (!fs.existsSync(filePath)) {
+    // 3. 🔑 NUEVA LÓGICA DE BÚSQUEDA INSENSIBLE A MAYÚSCULAS/MINÚSCULAS
+    if (!fs.existsSync(dirPath)) {
         return null;
     }
+    
+    // Leemos el contenido del directorio para encontrar el archivo real
+    const actualFileName = fs.readdirSync(dirPath, { withFileTypes: true })
+        .find(entry => 
+            entry.isFile() && 
+            entry.name.toLowerCase() === searchFileNameLower
+        )?.name;
 
+    if (!actualFileName) {
+        return null; // Archivo no encontrado
+    }
+    
+    // 4. Construye la ruta completa con el nombre del archivo REAL
+    const filePath = path.join(dirPath, actualFileName);
+
+    // ... (El resto del try/catch con readMDXFile se mantiene igual)
     try {
         const { metadata, content } = readMDXFile(filePath);
         
         return {
             metadata,
-            slug: fileSlug, // El slug es solo el nombre del archivo, no la ruta completa
+            slug: path.basename(actualFileName, '.mdx'), // Usa el nombre real sin extensión
             content,
         };
     } catch (error) {
@@ -191,22 +203,41 @@ const MAP_MIME_TYPES: {[key: string]: string} = {
     // Puedes añadir otros tipos de archivos comunes aquí (.woff, .woff2, .ico, etc.)
 };
 
-// --- Función para leer archivos estáticos ---
+// --- Función para leer archivos estáticos (Refactorizada) ---
 export function readFileFromSlug(slug: string[]): {
     buffer: Buffer;
     mime: string;
 } | null {
     try {
-        // 1. Resolver la ruta completa del archivo
-        const filePath = resolvePath(...slug);
+        // La ruta construida por resolvePath tendrá el casing del slug de la URL
+        const requestedFilePath = resolvePath(...slug);
         
-        // 2. Verificar si el archivo existe
-        if (!fs.existsSync(filePath)) return null;
+        // 1. 🔑 NUEVA LÓGICA DE BÚSQUEDA INSENSIBLE A MAYÚSCULAS/MINÚSCULAS
+        // Si el archivo exacto existe (ej: en sistemas case-insensitive), lo usamos.
+        let filePath = requestedFilePath;
+        
+        if (!fs.existsSync(filePath)) {
+            // Si no existe con el casing exacto, buscamos el real en el directorio
+            const dirPath = path.dirname(requestedFilePath);
+            const requestedFileNameLower = path.basename(requestedFilePath).toLowerCase();
 
-        // 3. Leer el contenido del archivo como Buffer (para archivos binarios)
+            if (!fs.existsSync(dirPath)) return null;
+
+            const actualFileName = fs.readdirSync(dirPath, { withFileTypes: true })
+                .find(entry => 
+                    entry.isFile() && 
+                    entry.name.toLowerCase() === requestedFileNameLower
+                )?.name;
+
+            if (!actualFileName) return null;
+            
+            filePath = path.join(dirPath, actualFileName);
+        }
+        
+        // 2. Leer el contenido del archivo como Buffer (para archivos binarios)
         const buffer = fs.readFileSync(filePath);
         
-        // 4. Determinar el MIME Type
+        // 3. Determinar el MIME Type (se mantiene igual, usando el archivo real)
         const ext = path.extname(filePath).toLowerCase();
         const mime = MAP_MIME_TYPES[ext] || "application/octet-stream";
 
