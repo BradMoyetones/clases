@@ -10,6 +10,7 @@ import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
 
 import { mdxComponents } from "./mdx-components";
+import { transformers } from "@/lib/highlight-code";
 
 type CustomMDXProps = MDXRemoteProps & {
   components?: typeof mdxComponents;
@@ -40,6 +41,7 @@ export function CustomMDX(props: CustomMDXProps) {
                 // Tema para modo oscuro (se activa cuando el HTML tiene la clase '.dark')
                 dark: "github-dark",
               },
+              transformers,
               keepBackground: false,
              }],
           ],

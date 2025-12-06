@@ -1,4 +1,4 @@
-import { readFileFromSlug } from "@/lib/clases";
+import { readFileFromSlug } from "@/lib/mdx";
 
 type ContextType = {
     params: Promise<{

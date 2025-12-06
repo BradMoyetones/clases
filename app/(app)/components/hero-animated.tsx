@@ -13,11 +13,12 @@ import MotionIcon from '@/components/icons/motion-icon';
 import ShadcnIcon from '@/components/icons/shadcn-icon';
 import { ArrowRightIcon } from '@/components/animate-ui/icons/arrow-right';
 import { AnimatedBackground } from '@/components/ui/animated-background';
+import { ClaseItem } from '@/lib/mdx';
 
 const ICONS = [ReactIcon, TSIcon, TailwindIcon, MotionIcon, ShadcnIcon];
 const TITLE = 'Aprende Javascript';
 
-export const Hero = () => {
+export const Hero = ({ newClase }: { newClase?: ClaseItem }) => {
     return (
         <div className="relative overflow-x-hidden flex flex-col items-center px-5 bg-linear-to-b from-background via-background to-muted/20">
             <AnimatedBackground circleCount={5} circleOpacity={0.11} />
@@ -30,13 +31,16 @@ export const Hero = () => {
                     zoom
                     inView
                 >
-                    <div className="mb-8 rounded-full bg-accent py-1 pl-1 pr-3 text-sm flex items-center gap-2">
-                        <Link href="#" className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
+                    <div className="mb-8 rounded-full bg-accent py-1 pl-1 pr-1 text-sm flex items-center gap-2">
+                        <Link
+                            href={`/clases/${newClase?.metadata.id}/readme`}
+                            className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400"
+                        >
                             <span className="h-6 px-2 bg-primary text-xs text-primary-foreground rounded-full flex gap-1 items-center justify-center">
                                 New
                                 <PartyPopper delay={500} className="size-3.5" animate />
-                            </span>{' '}
-                            {/* <span>Editor</span> */}
+                            </span>
+                            {newClase && <span className="pr-2"> {newClase.metadata.shortName}</span>}
                         </Link>
                     </div>
                 </MotionEffect>
@@ -98,9 +102,9 @@ export const Hero = () => {
                     >
                         <AnimateIcon animateOnHover="out" completeOnStop asChild>
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <Button size="sm" className="w-full !pr-5" variant="default" asChild>
-                                    <Link href="#">
-                                        Empezar <ArrowRightIcon className="!size-5" />
+                                <Button size="sm" className="w-full pr-5!" variant="default" asChild>
+                                    <Link href={`/clases/${newClase?.metadata.id}/readme`}>
+                                        Empezar <ArrowRightIcon className="size-5!" />
                                     </Link>
                                 </Button>
                             </motion.div>

@@ -17,9 +17,7 @@ Analizaremos cómo estructuramos la aplicación, el uso de **Tailwind CSS v4** p
 
 ---
 
-<Steps>
 
-<Step>
 ### Estructura HTML y Templates
 
 En `index.html`, utilizamos una técnica muy eficiente para generar contenido dinámico: la etiqueta `<template>`.
@@ -38,9 +36,7 @@ En lugar de crear elementos HTML desde cero con JavaScript (`document.createElem
 
 Esto mantiene nuestro JavaScript más limpio y separa la estructura de la lógica.
 
-</Step>
 
-<Step>
 ### Estilos con Tailwind CSS v4
 
 Hemos utilizado la versión más reciente de Tailwind CSS. En `src/input.css`, podemos ver cómo se configuran los temas y variables directamente en CSS.
@@ -78,9 +74,6 @@ Definimos animaciones clave (`keyframes`) directamente en el CSS para las transi
 }
 ```
 
-</Step>
-
-<Step>
 ### Lógica JavaScript Avanzada
 
 El corazón de la aplicación reside en `src/scripts.js`. Hemos estructurado el código en módulos lógicos para mantenerlo organizado.
@@ -140,10 +133,6 @@ function renderCard(formData, prepend = true) {
 }
 ```
 Esto permite que el navegador anime automáticamente los cambios en el DOM, creando una experiencia de usuario muy pulida.
-
-</Step>
-
-</Steps>
 
 ## Conclusión
 
