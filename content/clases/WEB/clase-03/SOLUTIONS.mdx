@@ -1,0 +1,263 @@
+---
+title: "Clase 03: Clase de Fundamentos JavaScript: Soluciones a los Ejercicios"
+description: "Soluciones y explicaciones detalladas para los 10 ejercicios de fundamentos de Arrays, Objetos y Strings en JavaScript."
+languages:
+  - javascript
+difficulty: "basic-to-advanced"
+duration: "45min"
+---
+
+# Soluciones Detalladas de los Ejercicios
+
+Aquí encontrarás las soluciones propuestas para cada ejercicio, con una breve explicación que resalta los conceptos clave utilizados. ¡Compara tus respuestas y aprende de los métodos nativos!
+
+---
+
+## Nivel Básico (Green)
+
+### Ejercicio 1 — Contar elementos en un array
+
+<Callout title="Concepto Clave: Filter o Reduce">
+Este problema se resuelve de manera limpia utilizando el método `filter()` para seleccionar los elementos que cumplen la condición. El resultado del filtro es un nuevo array, cuya longitud (`.length`) nos da el conteo.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function countGreaterThanTen(nums) {
+  // Filtra los números que son mayores que 10, y luego retorna la longitud del nuevo array.
+  return nums.filter(num => num > 10).length;
+}
+
+// Ejemplo: countGreaterThanTen([5, 12, 20, 1]) → 2
+````
+
+-----
+
+### Ejercicio 2 — Filtrar objetos
+
+<Callout title="Concepto Clave: Filter">
+Al igual que el ejercicio anterior, `filter()` crea un nuevo array con todos los elementos que pasan una prueba implementada por la función proporcionada. En este caso, la prueba es si la propiedad `active` es `true`.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function filterActive(users) {
+  // Filtra cada objeto 'user' donde la propiedad 'active' sea estrictamente true.
+  return users.filter(user => user.active === true);
+  // O más conciso: return users.filter(user => user.active);
+}
+
+// Ejemplo: filterActive([{name:"Ana",active:true}, {name:"Luis",active:false}]) → [{name:"Ana",active:true}]
+```
+
+-----
+
+### Ejercicio 3 — Invertir un string
+
+<Callout title="Concepto Clave: String ↔ Array ↔ String">
+Los strings no tienen un método `reverse()`. La solución estándar es transformarlo a un array con `split(&#39;&#39;)`, invertir el array, y luego unirlo de nuevo a un string con `join(&#39;&#39;)`.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function reverseString(str) {
+  // 1. split('') divide el string en un array de caracteres.
+  // 2. reverse() invierte el orden de los elementos del array.
+  // 3. join('') une el array de vuelta a un string.
+  return str.split('').reverse().join('');
+}
+
+// Ejemplo: reverseString("hola") → "aloh"
+```
+
+-----
+
+## Nivel Intermedio (Yellow)
+
+### Ejercicio 4 — Sumar los precios de un carrito
+
+<Callout title="Concepto Clave: Reduce">
+`reduce()` ejecuta una función reductora sobre cada elemento de un array, devolviendo un único valor. El **acumulador** (`acc`) es clave para mantener el total de la suma.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function getTotal(cart) {
+  // Inicializamos el acumulador (acc) en 0.
+  // En cada iteración, sumamos el precio del ítem actual al acumulador.
+  return cart.reduce((acc, item) => {
+    return acc + item.precio;
+  }, 0); // El '0' es el valor inicial de acc.
+}
+
+// Ejemplo: getTotal([{p:"Mouse",precio:50},{p:"Teclado",precio:100}]) → 150
+```
+
+-----
+
+### Ejercicio 5 — Obtener el mayor número
+
+<Callout title="Concepto Clave: Math.max o Reduce">
+Aunque `Math.max` puede ser usado con el operador `...` (spread), `reduce()` es un ejercicio más puro de lógica de arrays. Se compara el acumulador (el máximo actual) con el valor actual.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function maxNumber(arr) {
+  // Usando reduce: comparamos el acumulador (maximo actual) con el número actual.
+  return arr.reduce((max, current) => {
+    // Math.max retorna el mayor de los dos argumentos.
+    return Math.max(max, current);
+  });
+  
+  /* Alternativa concisa con Math.max y spread:
+  return Math.max(...arr); 
+  */
+}
+
+// Ejemplo: maxNumber([10, 50, 7]) → 50
+```
+
+-----
+
+### Ejercicio 6 — Contar vocales
+
+<Callout title="Concepto Clave: Expresiones Regulares (RegExp)">
+Usar `match()` con una expresión regular global (`/g`) es el método más eficiente. La expresión `/[aeiou]/gi` busca vocales, ignorando mayúsculas y minúsculas (`i`). Si encuentra coincidencias, el array resultante nos da la cuenta con `.length`.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function countVowels(str) {
+  // La expresión regular /[aeiou]/gi busca cualquier vocal, 'g' para todas las coincidencias
+  // e 'i' para que sea insensible a mayúsculas/minúsculas.
+  const matches = str.match(/[aeiou]/gi);
+  
+  // Si hay coincidencias, retorna el número de coincidencias, si no, retorna 0.
+  return matches ? matches.length : 0;
+}
+
+// Ejemplo: countVowels("javascript") → 3
+```
+
+-----
+
+## Nivel Desafiante (Orange)
+
+### Ejercicio 7 — Aplanar arrays
+
+<Callout title="Concepto Clave: Flat (Moderno) o Reduce + Concat">
+El método nativo `flat()` (ES2019) es la solución más simple. Si el ejercicio prohíbe métodos modernos, `reduce()` combinado con `concat()` o el operador `...` es la forma de "construir" un array aplanado.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function flatten(arr) {
+  // Solución moderna y más limpia (ES2019+):
+  // flat(1) aplana hasta el primer nivel.
+  return arr.flat(1);
+
+  /* Solución clásica con reduce:
+  return arr.reduce((acc, val) => acc.concat(val), []);
+  */
+}
+
+// Ejemplo: flatten([1, [2,3], [4,5]]) → [1, 2, 3, 4, 5]
+```
+
+-----
+
+### Ejercicio 8 — Agrupar por propiedad
+
+<Callout title="Concepto Clave: Reduce para Acumular en un Objeto">
+Aquí, el acumulador inicial debe ser un **objeto** vacío (`{}`). En cada iteración, se verifica si la clave ya existe en el acumulador. Si existe, se añade el objeto actual a ese array; si no, se crea la clave con el objeto actual como el primer elemento de un nuevo array.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function groupBy(arr, prop) {
+  // El acumulador 'acc' es el objeto vacío donde se almacenarán los grupos.
+  return arr.reduce((acc, obj) => {
+    const key = obj[prop]; // Obtiene el valor de la propiedad (ej: "Bogota").
+
+    // 1. Si la clave no existe en el acumulador, la crea con un array vacío.
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+
+    // 2. Añade el objeto actual al array correspondiente a esa clave.
+    acc[key].push(obj);
+    
+    return acc;
+  }, {}); // Se inicializa con un objeto vacío.
+}
+```
+
+-----
+
+## Nivel Experto (Red)
+
+### Ejercicio 9 — Simular una mini “base de datos”
+
+<Callout title="Concepto Clave: Contexto 'this' y FindIndex">
+`this` dentro de los métodos del objeto hace referencia al objeto `database` mismo. Para buscar o eliminar elementos eficientemente se usa `findIndex()` y `splice()`.
+</Callout>
+
+```js title="script.js" showLineNumbers
+const database = {
+  data: [],
+
+  add(obj) {
+    // 'this.data' se refiere al array 'data' dentro del objeto 'database'.
+    this.data.push(obj);
+  },
+
+  get(id) {
+    // Usa find() para obtener el primer objeto que cumpla la condición.
+    return this.data.find(user => user.id === id);
+  },
+
+  delete(id) {
+    // 1. Usa findIndex() para obtener el índice del elemento a eliminar.
+    const index = this.data.findIndex(user => user.id === id);
+
+    if (index !== -1) {
+      // 2. splice(index, 1) elimina 1 elemento en la posición 'index'.
+      this.data.splice(index, 1);
+    }
+  }
+};
+```
+
+-----
+
+### Ejercicio 10 — Resolver una expresión
+
+<Callout title="Concepto Clave: Parseo de String y Lógica Condicional">
+La clave es identificar el operador para saber dónde dividir la cadena y qué operación realizar. Se utiliza un bucle o `if/else` para determinar el operador y `parseInt()` para convertir las partes del string en números.
+</Callout>
+
+```js title="script.js" showLineNumbers
+function calc(expr) {
+  // Definimos los operadores válidos.
+  const operators = ['+', '-', '*', '/'];
+
+  // Buscamos el operador en la expresión.
+  for (const operator of operators) {
+    if (expr.includes(operator)) {
+      // Dividimos la expresión en dos números (operandos).
+      const parts = expr.split(operator).map(part => parseInt(part.trim(), 10));
+      const [num1, num2] = parts;
+
+      // Usamos un switch/case para realizar la operación.
+      switch (operator) {
+        case '+':
+          return num1 + num2;
+        case '-':
+          return num1 - num2;
+        case '*':
+          return num1 * num2;
+        case '/':
+          // Manejo básico de división por cero
+          if (num2 === 0) return NaN; 
+          return num1 / num2;
+      }
+    }
+  }
+  return NaN; // Retorna NaN si la expresión no es válida.
+}
+
+// Ejemplo: calc("10-4") → 6
+```

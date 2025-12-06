@@ -33,7 +33,15 @@ export function CustomMDX(props: CustomMDXProps) {
             rehypeSlug,
             [rehypeAutolinkHeadings, { behavior: 'wrap' }], // Opciones comunes
             rehypeKatex,
-            [rehypePrettyCode, { /* Opciones de configuración */ }],
+            [rehypePrettyCode, { 
+              theme: {
+                // Tema por defecto (Light mode)
+                light: "github-light",
+                // Tema para modo oscuro (se activa cuando el HTML tiene la clase '.dark')
+                dark: "github-dark",
+              },
+              keepBackground: false,
+             }],
           ],
         },
       }}
